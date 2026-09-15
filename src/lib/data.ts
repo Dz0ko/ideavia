@@ -787,7 +787,6 @@ export const universeNodes = [
 
 /* Social links (fill in the hrefs when the profiles are live) */
 export const socials = [
-  { key: "telegram", label: "Telegram", href: "" },
   { key: "instagram", label: "Instagram", href: "https://www.instagram.com/idaeviaa/" },
   { key: "x", label: "X", href: "https://x.com/idaevia" },
   { key: "linkedin", label: "LinkedIn", href: "" },
