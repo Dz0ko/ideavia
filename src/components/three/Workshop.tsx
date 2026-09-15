@@ -5,6 +5,7 @@ import { useFrame } from "@react-three/fiber";
 import { Float, Points, PointMaterial, RoundedBox } from "@react-three/drei";
 import * as THREE from "three";
 import LazyScene from "./LazyScene";
+import Reactor from "./Reactor";
 
 const ACCENT = "#5b6bff";
 const CYAN = "#38e8ff";
@@ -172,15 +173,17 @@ function CameraRig() {
 
 export default function Workshop({ className = "" }: { className?: string }) {
   return (
-    <LazyScene className={className} camera={{ position: [0, 0.4, 7.5], fov: 42 }}>
+    <LazyScene className={className} camera={{ position: [0, 1.2, 8.5], fov: 42 }}>
       <CameraRig />
       <Dust />
-      <Blockchain />
-      <Monitor position={[-3.1, 1.6, -1.2]} rotation={[0, 0.5, 0]} seed={1} />
-      <Monitor position={[3.2, 1.4, -1.5]} rotation={[0, -0.55, 0]} seed={2} />
-      <Monitor position={[-2.4, -1.9, -0.6]} rotation={[0.15, 0.35, 0]} seed={3} />
-      <Monitor position={[2.6, -1.7, -0.9]} rotation={[0.1, -0.4, 0]} seed={5} />
-      {/* abstract machine: slow gyroscope */}
+      {/* the reactor: crystal on a pedestal with neon tubes */}
+      <Reactor position={[0, -1.0, 0]} />
+      {/* blockchain runs behind it */}
+      <group position={[0, 2.6, -3.5]} scale={0.8}>
+        <Blockchain />
+      </group>
+      <Monitor position={[-3.6, 1.9, -1.8]} rotation={[0, 0.5, 0]} seed={1} />
+      <Monitor position={[3.7, 1.7, -2.0]} rotation={[0, -0.55, 0]} seed={2} />
       <Gyro />
     </LazyScene>
   );
@@ -194,7 +197,7 @@ function Gyro() {
     if (b.current) b.current.rotation.y += dt * 0.7;
   });
   return (
-    <group position={[0, 2.3, -2.5]}>
+    <group position={[0, 4.2, -4.5]}>
       <mesh ref={a}>
         <torusGeometry args={[0.9, 0.012, 8, 96]} />
         <meshBasicMaterial color="#ffffff" transparent opacity={0.4} />

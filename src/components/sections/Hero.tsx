@@ -29,8 +29,13 @@ export default function Hero() {
         style={{ scale, opacity }}
         className="absolute inset-0 z-0"
       >
-        <div className="h-full w-full lg:translate-x-[30%] lg:scale-[0.88] xl:translate-x-[33%]">
+        <div className="relative h-full w-full lg:translate-x-[30%] lg:scale-[0.88] xl:translate-x-[33%]">
           <IdaeviaCore className="h-full w-full" accent="#5b6bff" />
+          {/* status chip, like a live node on the globe */}
+          <div className="pointer-events-none absolute left-1/2 top-[30%] hidden -translate-x-[10%] items-center gap-2 rounded-full border border-white/12 bg-ink/80 px-3 py-1.5 font-mono text-[10px] tracking-[0.2em] text-chalk/70 lg:flex">
+            <span className="h-1.5 w-1.5 rounded-full bg-accent shadow-[0_0_10px_#5b6bff]" />
+            ONLINE · SKOPJE
+          </div>
         </div>
       </motion.div>
 
