@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import Wordmark from "@/components/ui/Wordmark";
+import { markSiteReady } from "@/lib/ready";
 
 export default function Preloader() {
   const [progress, setProgress] = useState(0);
@@ -13,6 +14,7 @@ export default function Preloader() {
     // Only play once per session.
     if (typeof window !== "undefined" && sessionStorage.getItem("idevia_loaded")) {
       setShow(false);
+      markSiteReady();
       return;
     }
     document.body.style.overflow = "hidden";
@@ -31,6 +33,8 @@ export default function Preloader() {
       if (t >= 1) {
         setProgress(100);
         setTimeout(() => setDone(true), HOLD);
+        // reveal the site while the overlay is still fading out
+        setTimeout(markSiteReady, HOLD + 800);
         setTimeout(() => {
           setShow(false);
           document.body.style.overflow = "";

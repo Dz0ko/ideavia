@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import MagneticButton from "@/components/ui/MagneticButton";
 import Wordmark from "@/components/ui/Wordmark";
+import { useSiteReady } from "@/lib/ready";
 
 const links = [
   { label: "Products", href: "/products" },
@@ -19,6 +20,7 @@ export default function Nav() {
   const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  const ready = useSiteReady();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
@@ -33,44 +35,64 @@ export default function Nav() {
 
   return (
     <>
-      <header
-        className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ${
+      <motion.header
+        initial={false}
+        animate={ready ? { y: 0, opacity: 1 } : { y: -24, opacity: 0 }}
+        transition={{ duration: 0.9, ease: [0.19, 1, 0.22, 1], delay: 0.15 }}
+        className={`fixed inset-x-0 top-0 z-50 transition-[background-color,border-color] duration-500 ${
           scrolled ? "border-b border-white/5 bg-ink/95" : "border-b border-transparent"
         }`}
       >
         <div className="container-x grid h-[72px] grid-cols-[1fr_auto] items-center md:grid-cols-[1fr_auto_1fr]">
-          <Link href="/" className="text-lg font-semibold tracking-[0.28em]" data-cursor="arrow">
-            <Wordmark />
-          </Link>
+          <motion.div
+            initial={false}
+            animate={ready ? { opacity: 1, x: 0 } : { opacity: 0, x: -12 }}
+            transition={{ duration: 0.8, ease: [0.19, 1, 0.22, 1], delay: 0.25 }}
+          >
+            <Link href="/" className="text-lg font-semibold tracking-[0.28em]" data-cursor="arrow">
+              <Wordmark />
+            </Link>
+          </motion.div>
 
           <nav className="hidden items-center justify-center gap-1 md:flex">
-            {links.map((l) => {
+            {links.map((l, i) => {
               const active = isActive(l.href);
               return (
-                <Link
+                <motion.div
                   key={l.href}
-                  href={l.href}
-                  data-cursor="arrow"
-                  className={`group relative rounded-full px-4 py-2 text-sm transition-colors ${
-                    active ? "text-white" : "text-chalk/60 hover:text-white"
-                  }`}
+                  initial={false}
+                  animate={ready ? { opacity: 1, y: 0 } : { opacity: 0, y: -10 }}
+                  transition={{ duration: 0.7, ease: [0.19, 1, 0.22, 1], delay: 0.35 + i * 0.06 }}
                 >
-                  {l.label}
-                  <span
-                    className={`absolute inset-x-4 -bottom-px h-px bg-accent transition-transform duration-300 ${
-                      active ? "scale-x-100" : "scale-x-0 group-hover:scale-x-100"
+                  <Link
+                    href={l.href}
+                    data-cursor="arrow"
+                    className={`group relative block rounded-full px-4 py-2 text-sm transition-colors ${
+                      active ? "text-white" : "text-chalk/60 hover:text-white"
                     }`}
-                  />
-                </Link>
+                  >
+                    {l.label}
+                    <span
+                      className={`absolute inset-x-4 -bottom-px h-px bg-accent transition-transform duration-300 ${
+                        active ? "scale-x-100" : "scale-x-0 group-hover:scale-x-100"
+                      }`}
+                    />
+                  </Link>
+                </motion.div>
               );
             })}
           </nav>
 
-          <div className="hidden justify-end md:flex">
+          <motion.div
+            className="hidden justify-end md:flex"
+            initial={false}
+            animate={ready ? { opacity: 1, x: 0 } : { opacity: 0, x: 12 }}
+            transition={{ duration: 0.8, ease: [0.19, 1, 0.22, 1], delay: 0.5 }}
+          >
             <MagneticButton href="/contact" variant="solid">
               Start a Project →
             </MagneticButton>
-          </div>
+          </motion.div>
 
           <button
             className="flex h-10 w-10 flex-col items-center justify-center gap-1.5 justify-self-end md:hidden"
@@ -81,7 +103,7 @@ export default function Nav() {
             <span className={`h-px w-6 bg-white transition-transform ${open ? "-translate-y-[3px] -rotate-45" : ""}`} />
           </button>
         </div>
-      </header>
+      </motion.header>
 
       <AnimatePresence>
         {open && (
