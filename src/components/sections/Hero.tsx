@@ -44,7 +44,7 @@ export default function Hero() {
 
       <motion.div
         style={{ y, opacity }}
-        className="container-x relative z-10 w-full"
+        className="container-x pointer-events-none relative z-10 w-full"
       >
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -77,7 +77,7 @@ export default function Hero() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.85, duration: 0.8 }}
-          className="mt-10 flex flex-wrap gap-4"
+          className="pointer-events-auto mt-10 flex flex-wrap gap-4"
         >
           <MagneticButton href="/#explore" variant="solid">
             Explore IDAEVIA →

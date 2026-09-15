@@ -1,7 +1,5 @@
-import Link from "next/link";
 import Reveal from "@/components/ui/Reveal";
 import SectionHeading from "@/components/ui/SectionHeading";
-import MagneticButton from "@/components/ui/MagneticButton";
 import { studioServices } from "@/lib/data";
 
 export default function Studio() {
@@ -34,12 +32,6 @@ export default function Studio() {
               </div>
             </Reveal>
           ))}
-        </div>
-
-        <div className="mt-12">
-          <MagneticButton href="/studio" variant="outline">
-            Explore the Studio →
-          </MagneticButton>
         </div>
       </div>
     </section>
