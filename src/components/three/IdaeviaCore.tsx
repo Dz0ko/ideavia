@@ -64,62 +64,20 @@ const HUBS: [number, number][] = [
   [-23.5, -46.6], // São Paulo
   [35.7, 139.7], // Tokyo
   [52.5, 13.4], // Berlin
-  [48.9, 2.35], // Paris
-  [40.4, -3.7], // Madrid
-  [41.0, 29.0], // Istanbul
-  [55.8, 37.6], // Moscow
-  [64.1, -21.9], // Reykjavik
   [34.05, -118.2], // Los Angeles
-  [43.7, -79.4], // Toronto
-  [19.4, -99.1], // Mexico City
   [-34.6, -58.4], // Buenos Aires
-  [-33.4, -70.6], // Santiago
-  [-12.0, -77.0], // Lima
   [6.5, 3.4], // Lagos
-  [30.0, 31.2], // Cairo
   [-26.2, 28.0], // Johannesburg
-  [-1.3, 36.8], // Nairobi
   [19.1, 72.9], // Mumbai
-  [13.8, 100.5], // Bangkok
-  [22.3, 114.2], // Hong Kong
-  [37.6, 127.0], // Seoul
   [-33.9, 151.2], // Sydney
-  [-36.8, 174.8], // Auckland
-  [-31.9, 115.9], // Perth
-  [61.2, -149.9], // Anchorage
-  [21.3, -157.8], // Honolulu
 ];
 
-/** Every hub links to its two nearest neighbours, plus a set of long-haul routes across the whole sphere. */
-const LONG_HAUL: [number, number][] = [
-  [0, 2], [0, 3], [0, 4], [0, 13], [0, 21], [0, 6], [0, 27],
-  [1, 2], [1, 14], [1, 3], [1, 19], [2, 5], [2, 13], [2, 12],
-  [3, 4], [3, 23], [3, 21], [4, 6], [4, 27], [5, 19], [5, 16],
-  [6, 13], [6, 31], [6, 26], [13, 31], [13, 15], [15, 18], [16, 21],
-  [22, 23], [24, 27], [25, 27], [27, 28], [29, 4], [30, 6], [30, 14], [11, 26], [11, 3],
+/** One clean set of routes across the whole sphere, one pulse per route. */
+const ROUTES: [number, number][] = [
+  [0, 1], [0, 2], [0, 3], [0, 7], [0, 10], [0, 12],
+  [1, 2], [1, 8], [2, 5], [2, 9], [3, 4], [3, 12],
+  [4, 6], [4, 13], [5, 10], [6, 8], [9, 11], [11, 13], [7, 12],
 ];
-function buildRoutes(): [number, number][] {
-  const pos = HUBS.map(([la, lo]) => latLon(la, lo, 1));
-  const seen = new Set<string>();
-  const out: [number, number][] = [];
-  const add = (i: number, j: number) => {
-    const k = i < j ? `${i}-${j}` : `${j}-${i}`;
-    if (i === j || seen.has(k)) return;
-    seen.add(k);
-    out.push([i, j]);
-  };
-  pos.forEach((p, i) => {
-    const near = pos
-      .map((q, j) => ({ j, d: p.distanceTo(q) }))
-      .filter(({ j }) => j !== i)
-      .sort((a, b) => a.d - b.d)
-      .slice(0, 2);
-    near.forEach(({ j }) => add(i, j));
-  });
-  LONG_HAUL.forEach(([i, j]) => add(i, j));
-  return out;
-}
-const ROUTES = buildRoutes();
 
 function arcPoints(a: THREE.Vector3, b: THREE.Vector3, n = 48) {
   const pts: THREE.Vector3[] = [];
@@ -161,11 +119,8 @@ function Arcs({ accent }: { accent: string }) {
             points={pts}
             color="#7c89ff"
             lineWidth={1}
-            dashed
-            dashSize={0.22}
-            gapSize={0.14}
             transparent
-            opacity={0.65}
+            opacity={0.45}
           />
           <mesh ref={(m) => { pulses.current[i] = m; }}>
             <sphereGeometry args={[0.018, 8, 8]} />
@@ -262,7 +217,7 @@ function Globe({ accent }: { accent: string }) {
       {/* soft rim */}
       <mesh>
         <sphereGeometry args={[R + 0.03, 48, 48]} />
-        <meshBasicMaterial color="#ffffff" transparent opacity={0.05} side={THREE.BackSide} />
+        <meshBasicMaterial color="#ffffff" transparent opacity={0.09} side={THREE.BackSide} />
       </mesh>
       {positions && (
         <Points positions={positions} stride={3}>

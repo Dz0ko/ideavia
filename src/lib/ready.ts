@@ -26,7 +26,12 @@ export function useSiteReady() {
     }
     const on = () => setState(true);
     window.addEventListener(EVENT, on);
-    return () => window.removeEventListener(EVENT, on);
+    // safety net: never leave the site hidden if the signal is somehow missed
+    const t = setTimeout(markSiteReady, 6000);
+    return () => {
+      window.removeEventListener(EVENT, on);
+      clearTimeout(t);
+    };
   }, []);
   return state;
 }

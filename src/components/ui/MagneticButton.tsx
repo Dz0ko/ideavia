@@ -66,7 +66,11 @@ export default function MagneticButton({
         </a>
       );
     }
-    return <Link href={href}>{inner}</Link>;
+    return (
+      <Link href={href} prefetch>
+        {inner}
+      </Link>
+    );
   }
   return (
     <button onClick={onClick} type="button">

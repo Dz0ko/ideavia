@@ -66,6 +66,7 @@ export default function Nav() {
                 >
                   <Link
                     href={l.href}
+                    prefetch
                     data-cursor="arrow"
                     className={`group relative block rounded-full px-4 py-2 text-sm transition-colors ${
                       active ? "text-white" : "text-chalk/60 hover:text-white"

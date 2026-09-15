@@ -62,6 +62,7 @@ export default function Explore() {
             <Reveal key={d.href} delay={i * 0.05}>
               <Link
                 href={d.href}
+                prefetch
                 data-cursor="view"
                 className="group relative flex h-full min-h-[260px] flex-col justify-between bg-ink p-8 transition-colors duration-500 hover:bg-ink-700 md:p-10"
               >

@@ -49,16 +49,6 @@ export default function Hero() {
           >
             <IdaeviaCore className="h-full w-full" accent="#5b6bff" />
           </motion.div>
-          {/* status chip, like a live node on the globe */}
-          <motion.div
-            className="pointer-events-none absolute left-1/2 top-[30%] hidden -translate-x-[10%] items-center gap-2 rounded-full border border-white/12 bg-ink/80 px-3 py-1.5 font-mono text-[10px] tracking-[0.2em] text-chalk/70 lg:flex"
-            initial={false}
-            animate={ready ? { opacity: 1 } : { opacity: 0 }}
-            transition={{ duration: 0.8, delay: 1.3 }}
-          >
-            <span className="h-1.5 w-1.5 rounded-full bg-accent shadow-[0_0_10px_#5b6bff]" />
-            ONLINE · SKOPJE
-          </motion.div>
         </div>
       </motion.div>
 
