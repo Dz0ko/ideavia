@@ -46,9 +46,13 @@ export async function POST(req: NextRequest) {
   const idea = cleanMultiline(b.idea, 4000);
   const type = clean(b.type, 60);
   const budget = clean(b.budget, 60);
+  const contact = clean(b.contact, 80);
 
   if (name.length < 2) return NextResponse.json({ ok: false, error: "Please enter your name." }, { status: 400 });
   if (!EMAIL_RE.test(email)) return NextResponse.json({ ok: false, error: "Please enter a valid email." }, { status: 400 });
+  if (contact.length < 3 || !/^[+@]?[\w.+\-\s()]{3,}$/.test(contact)) {
+    return NextResponse.json({ ok: false, error: "Please leave a Telegram username or WhatsApp number." }, { status: 400 });
+  }
   if (type && !ALLOWED_TYPES.has(type)) return NextResponse.json({ ok: false, error: "Invalid project type." }, { status: 400 });
   if (budget && !ALLOWED_BUDGETS.has(budget)) return NextResponse.json({ ok: false, error: "Invalid budget." }, { status: 400 });
 
@@ -60,6 +64,7 @@ export async function POST(req: NextRequest) {
     idea: idea || null,
     type: type || null,
     budget: budget || null,
+    contact,
     source: "contact",
     country: req.headers.get("x-vercel-ip-country") || req.headers.get("cf-ipcountry") || null,
   });

@@ -63,9 +63,15 @@ function open() {
       country TEXT
     );
   `);
-  // additive migration: submissions.source
-  const cols = db.prepare(`PRAGMA table_info(submissions)`).all() as { name: string }[];
-  if (!cols.some((c) => c.name === "source")) db.exec(`ALTER TABLE submissions ADD COLUMN source TEXT`);
+  // additive migrations
+  const addCol = (table: string, col: string) => {
+    const cols = db.prepare(`PRAGMA table_info(${table})`).all() as { name: string }[];
+    if (!cols.some((c) => c.name === col)) db.exec(`ALTER TABLE ${table} ADD COLUMN ${col} TEXT`);
+  };
+  addCol("submissions", "source");
+  addCol("submissions", "contact");
+  addCol("pageviews", "city");
+  addCol("sessions", "city");
   return db;
 }
 
@@ -86,6 +92,7 @@ export type TrackInput = {
   ua?: string | null;
   device?: string | null;
   country?: string | null;
+  city?: string | null;
   screenW?: number | null;
   kind: "pageview" | "heartbeat";
 };
@@ -105,8 +112,8 @@ export function track(input: TrackInput) {
 
     if (!session) {
       d.prepare(
-        `INSERT INTO sessions (id, visitor_id, started, last_seen, path, device, country)
-         VALUES (?, ?, ?, ?, ?, ?, ?)`
+        `INSERT INTO sessions (id, visitor_id, started, last_seen, path, device, country, city)
+         VALUES (?, ?, ?, ?, ?, ?, ?, ?)`
       ).run(
         input.sessionId,
         input.visitorId,
@@ -114,7 +121,8 @@ export function track(input: TrackInput) {
         now,
         input.path,
         input.device ?? null,
-        input.country ?? null
+        input.country ?? null,
+        input.city ?? null
       );
       d.prepare(`UPDATE visitors SET visits = visits + 1 WHERE id = ?`).run(
         input.visitorId
@@ -127,8 +135,8 @@ export function track(input: TrackInput) {
 
     if (input.kind === "pageview") {
       d.prepare(
-        `INSERT INTO pageviews (ts, visitor_id, session_id, path, referrer, ua, device, country, screen_w)
-         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`
+        `INSERT INTO pageviews (ts, visitor_id, session_id, path, referrer, ua, device, country, city, screen_w)
+         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
       ).run(
         now,
         input.visitorId,
@@ -138,6 +146,7 @@ export function track(input: TrackInput) {
         input.ua ?? null,
         input.device ?? null,
         input.country ?? null,
+        input.city ?? null,
         input.screenW ?? null
       );
     }
@@ -158,13 +167,14 @@ export type SubmissionInput = {
   budget?: string | null;
   country?: string | null;
   source?: string | null;
+  contact?: string | null;
 };
 
 export function addSubmission(s: SubmissionInput) {
   const r = db()
     .prepare(
-      `INSERT INTO submissions (ts, type, idea, name, company, email, budget, country, source)
-       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`
+      `INSERT INTO submissions (ts, type, idea, name, company, email, budget, country, source, contact)
+       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
     )
     .run(
       Date.now(),
@@ -175,7 +185,8 @@ export function addSubmission(s: SubmissionInput) {
       s.email,
       s.budget ?? null,
       s.country ?? null,
-      s.source ?? null
+      s.source ?? null,
+      s.contact ?? null
     );
   return Number(r.lastInsertRowid);
 }
@@ -231,8 +242,9 @@ export function getStats(days = 30) {
     last_seen: number;
     device: string | null;
     country: string | null;
+    city: string | null;
   }>(
-    `SELECT id, path, started, last_seen, device, country FROM sessions
+    `SELECT id, path, started, last_seen, device, country, city FROM sessions
      WHERE last_seen > ? ORDER BY last_seen DESC LIMIT 50`,
     activeWindow
   );
@@ -326,10 +338,13 @@ export function getStats(days = 30) {
     referrer: string | null;
     device: string | null;
     country: string | null;
+    city: string | null;
+    ua: string | null;
+    screen_w: number | null;
     visitor_id: string;
   }>(
-    `SELECT ts, path, referrer, device, country, visitor_id
-     FROM pageviews ORDER BY ts DESC LIMIT 40`
+    `SELECT ts, path, referrer, device, country, city, ua, screen_w, visitor_id
+     FROM pageviews ORDER BY ts DESC LIMIT 100`
   );
   const recentSubmissions = all<Record<string, unknown>>(
     `SELECT * FROM submissions ORDER BY ts DESC LIMIT 6`

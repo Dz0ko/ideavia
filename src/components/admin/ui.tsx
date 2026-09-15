@@ -90,6 +90,131 @@ export function fmtDate(ts: number) {
 }
 
 /* ------------------------------------------------------------------ */
+/* Visitor formatting helpers                                          */
+/* ------------------------------------------------------------------ */
+
+/** "MK" → "🇲🇰" */
+export function flag(code?: string | null) {
+  if (!code || code.length !== 2 || code === "XX") return "";
+  return String.fromCodePoint(...code.toUpperCase().split("").map((c) => 0x1f1e6 + c.charCodeAt(0) - 65));
+}
+
+/** "MK" → "North Macedonia" (browser locale). */
+export function countryName(code?: string | null) {
+  if (!code) return "Unknown";
+  try {
+    return new Intl.DisplayNames(["en"], { type: "region" }).of(code.toUpperCase()) || code;
+  } catch {
+    return code;
+  }
+}
+
+/** Referrer origin → readable source name. */
+export function refHost(r?: string | null) {
+  if (!r || r === "(direct)") return "Direct";
+  try {
+    const h = new URL(r).hostname.replace(/^www\./, "");
+    const known: [RegExp, string][] = [
+      [/google\./, "Google"], [/bing\./, "Bing"], [/duckduckgo/, "DuckDuckGo"], [/yahoo\./, "Yahoo"],
+      [/instagram/, "Instagram"], [/facebook|fb\.com/, "Facebook"], [/^(t\.co|x\.com|twitter\.com)$/, "X / Twitter"],
+      [/linkedin/, "LinkedIn"], [/t\.me|telegram/, "Telegram"], [/youtube|youtu\.be/, "YouTube"], [/tiktok/, "TikTok"],
+      [/reddit/, "Reddit"], [/github/, "GitHub"], [/whatsapp/, "WhatsApp"],
+    ];
+    for (const [re, name] of known) if (re.test(h)) return name;
+    return h;
+  } catch {
+    return r;
+  }
+}
+
+/** Browser + OS from a user-agent string. */
+export function parseUA(ua?: string | null) {
+  if (!ua) return { browser: "—", os: "—" };
+  const browser =
+    /Edg\//.test(ua) ? "Edge" :
+    /OPR\/|Opera/.test(ua) ? "Opera" :
+    /SamsungBrowser/.test(ua) ? "Samsung" :
+    /Firefox\//.test(ua) ? "Firefox" :
+    /Chrome\/|CriOS/.test(ua) ? "Chrome" :
+    /Safari\//.test(ua) ? "Safari" :
+    /Instagram/.test(ua) ? "Instagram app" :
+    /FBAN|FBAV/.test(ua) ? "Facebook app" :
+    /Telegram/.test(ua) ? "Telegram" :
+    /bot|crawl|spider/i.test(ua) ? "Bot" : "Other";
+  const os =
+    /iPhone|iPad|iPod/.test(ua) ? "iOS" :
+    /Android/.test(ua) ? "Android" :
+    /Windows/.test(ua) ? "Windows" :
+    /Mac OS X|Macintosh/.test(ua) ? "macOS" :
+    /CrOS/.test(ua) ? "ChromeOS" :
+    /Linux/.test(ua) ? "Linux" : "—";
+  return { browser, os };
+}
+
+export type FeedRow = {
+  ts: number;
+  path: string;
+  referrer: string | null;
+  device: string | null;
+  country: string | null;
+  city?: string | null;
+  ua?: string | null;
+  screen_w?: number | null;
+  visitor_id: string;
+};
+
+/** Readable visitor log: when, page, where from, device / browser / OS, location. */
+export function VisitorFeed({ rows, limit }: { rows: FeedRow[]; limit?: number }) {
+  const list = limit ? rows.slice(0, limit) : rows;
+  if (!list.length) return <Empty>No traffic recorded yet. Open the site in another tab.</Empty>;
+  return (
+    <div className="overflow-x-auto">
+      <table className="w-full text-sm">
+        <thead className="text-left text-[11px] uppercase tracking-wider text-chalk/40">
+          <tr>
+            <th className="py-2 pr-4">When</th>
+            <th className="py-2 pr-4">Page</th>
+            <th className="py-2 pr-4">Came from</th>
+            <th className="py-2 pr-4">Device</th>
+            <th className="py-2 pr-4">Location</th>
+            <th className="py-2">Visitor</th>
+          </tr>
+        </thead>
+        <tbody>
+          {list.map((p, i) => {
+            const { browser, os } = parseUA(p.ua);
+            const f = flag(p.country);
+            return (
+              <tr key={i} className="border-t border-white/5 align-top">
+                <td className="py-2 pr-4 whitespace-nowrap text-chalk/50" title={new Date(p.ts).toLocaleString()}>
+                  {timeAgo(p.ts)}
+                </td>
+                <td className="py-2 pr-4 font-medium">{p.path}</td>
+                <td className="max-w-[200px] truncate py-2 pr-4 text-chalk/70" title={p.referrer || "Direct"}>
+                  {refHost(p.referrer)}
+                </td>
+                <td className="py-2 pr-4 whitespace-nowrap">
+                  <span className="capitalize">{p.device ?? "—"}</span>
+                  <span className="ml-1.5 text-xs text-chalk/40">
+                    {browser}{os !== "—" ? ` · ${os}` : ""}{p.screen_w ? ` · ${p.screen_w}px` : ""}
+                  </span>
+                </td>
+                <td className="py-2 pr-4 whitespace-nowrap">
+                  {f && <span className="mr-1.5">{f}</span>}
+                  {countryName(p.country)}
+                  {p.city && <span className="ml-1.5 text-xs text-chalk/40">· {p.city}</span>}
+                </td>
+                <td className="py-2 font-mono text-xs text-chalk/35">{p.visitor_id.slice(0, 8)}</td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
+    </div>
+  );
+}
+
+/* ------------------------------------------------------------------ */
 /* Charts (single-series, one hue, hover tooltip, table alternative)   */
 /* ------------------------------------------------------------------ */
 

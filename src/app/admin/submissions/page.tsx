@@ -15,7 +15,18 @@ type Submission = {
   budget: string | null;
   status: string;
   country: string | null;
+  contact?: string | null;
 };
+
+/** Telegram handle or WhatsApp number → clickable link. */
+function contactLink(c: string) {
+  const v = c.trim();
+  if (v.startsWith("@")) return { href: `https://t.me/${v.slice(1)}`, label: `${v} (Telegram)` };
+  const digits = v.replace(/[^\d]/g, "");
+  if (/^\+?[\d\s()-]{7,}$/.test(v) && digits.length >= 7) return { href: `https://wa.me/${digits}`, label: `${v} (WhatsApp)` };
+  if (/^[a-z0-9_]{4,}$/i.test(v)) return { href: `https://t.me/${v}`, label: `@${v} (Telegram)` };
+  return { href: null, label: v };
+}
 
 function SubmissionsInner() {
   const params = useSearchParams();
@@ -94,6 +105,7 @@ function SubmissionsInner() {
                   <th className="py-2 pr-4">Building</th>
                   <th className="py-2 pr-4">Budget</th>
                   <th className="py-2 pr-4">Email</th>
+                  <th className="py-2 pr-4">Telegram / WhatsApp</th>
                   <th className="py-2">Status</th>
                 </tr>
               </thead>
@@ -114,6 +126,7 @@ function SubmissionsInner() {
                     <td className="py-2.5 pr-4">{s.type ?? "—"}</td>
                     <td className="py-2.5 pr-4 text-chalk/60">{s.budget ?? "—"}</td>
                     <td className="py-2.5 pr-4 text-chalk/60">{s.email}</td>
+                    <td className="py-2.5 pr-4 text-chalk/60">{s.contact ?? "—"}</td>
                     <td className="py-2.5">
                       <StatusBadge status={s.status} />
                     </td>
@@ -148,6 +161,16 @@ function SubmissionsInner() {
                 <Row k="Name" v={s.name} />
                 <Row k="Company" v={s.company ?? "—"} />
                 <Row k="Email" v={<a className="text-[#8b97ff] hover:underline" href={`mailto:${s.email}`}>{s.email}</a>} />
+                <Row
+                  k="Telegram / WhatsApp"
+                  v={(() => {
+                    if (!s.contact) return "—";
+                    const c = contactLink(s.contact);
+                    return c.href ? (
+                      <a className="text-[#8b97ff] hover:underline" href={c.href} target="_blank" rel="noreferrer">{c.label}</a>
+                    ) : c.label;
+                  })()}
+                />
                 <Row k="Building" v={s.type ?? "—"} />
                 <Row k="Budget" v={s.budget ?? "—"} />
                 <Row k="Country" v={s.country ?? "—"} />

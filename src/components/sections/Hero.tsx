@@ -32,20 +32,21 @@ export default function Hero() {
   return (
     <section
       ref={ref}
-      className="relative flex min-h-[100svh] items-center overflow-hidden pt-24 pb-20 md:pt-0 md:pb-0"
+      className="relative flex min-h-[100svh] items-end overflow-hidden pt-24 pb-16 lg:items-center lg:pb-0 lg:pt-0"
     >
       {/* 3D core */}
       <motion.div
         style={{ scale, opacity }}
         className="absolute inset-0 z-0"
       >
-        <div className="relative h-full w-full lg:translate-x-[30%] lg:scale-[0.88] xl:translate-x-[33%]">
-          {/* the globe fades and swells in once the site is ready */}
+        {/* on phones the globe sits in the top half, dimmed, so the copy below stays readable */}
+        <div className="relative h-full w-full -translate-y-[24%] scale-[0.95] opacity-60 lg:translate-y-0 lg:translate-x-[30%] lg:scale-[0.88] lg:opacity-100 xl:translate-x-[33%]">
+          {/* the globe drops in from above once the site is ready */}
           <motion.div
             className="h-full w-full"
             initial={false}
-            animate={ready ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.9 }}
-            transition={{ duration: 1.8, ease: EASE, delay: 0.1 }}
+            animate={ready ? { opacity: 1, y: "0%", scale: 1 } : { opacity: 0, y: "-70%", scale: 0.85 }}
+            transition={{ duration: 2.2, ease: EASE, delay: 0.1 }}
           >
             <IdaeviaCore className="h-full w-full" accent="#5b6bff" />
           </motion.div>
@@ -54,6 +55,8 @@ export default function Hero() {
 
       {/* radial vignette */}
       <div className="pointer-events-none absolute inset-0 z-[1] bg-[radial-gradient(ellipse_at_center,transparent_35%,rgba(5,5,6,0.85)_100%)]" />
+      {/* phones: dark ground behind the copy */}
+      <div className="pointer-events-none absolute inset-0 z-[1] bg-gradient-to-b from-transparent via-ink/75 to-ink lg:hidden" />
 
       <motion.div
         style={{ y, opacity }}
@@ -72,7 +75,7 @@ export default function Hero() {
 
         <motion.p
           {...fade(0.85)}
-          className="mt-8 max-w-xl text-base leading-relaxed text-chalk/60 md:text-lg"
+          className="mt-6 max-w-xl text-base leading-relaxed text-chalk/75 md:mt-8 md:text-lg lg:text-chalk/60"
         >
           We design and build every kind of digital product: Web3 platforms,
           games, marketplaces, websites, SaaS, mobile apps, AI, full branding

@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useStats } from "@/components/admin/useStats";
-import { Card, DailyBars, HBarList, HourlyBars, StatTile } from "@/components/admin/ui";
+import { Card, DailyBars, HBarList, HourlyBars, StatTile, VisitorFeed, countryName, flag, refHost } from "@/components/admin/ui";
 
 export default function AnalyticsPage() {
   const [days, setDays] = useState(30);
@@ -64,30 +64,28 @@ export default function AnalyticsPage() {
         <Card title="Top pages">
           <HBarList rows={stats.topPages} labelKey="path" valueKey="views" />
         </Card>
-        <Card title="Referrers">
-          <HBarList
-            rows={stats.referrers}
-            labelKey="referrer"
-            valueKey="views"
-            formatLabel={(r) => {
-              try {
-                return r === "(direct)" ? r : new URL(r).hostname;
-              } catch {
-                return r;
-              }
-            }}
-          />
+        <Card title="Where visitors come from">
+          <HBarList rows={stats.referrers} labelKey="referrer" valueKey="views" formatLabel={refHost} />
         </Card>
         <Card title="Countries">
-          <HBarList rows={stats.countries} labelKey="country" valueKey="views" />
+          <HBarList
+            rows={stats.countries}
+            labelKey="country"
+            valueKey="views"
+            formatLabel={(c) => (c === "unknown" ? "Unknown" : `${flag(c)} ${countryName(c)}`)}
+          />
           <p className="mt-4 text-[11px] text-chalk/35">
-            Country is filled from the hosting provider&apos;s geo header (Vercel / Cloudflare). Locally it shows as unknown.
+            Country and city come from the hosting provider&apos;s geo header (Vercel / Cloudflare). Locally they show as unknown.
           </p>
         </Card>
         <Card title="Submissions by type">
           <HBarList rows={stats.submissionTypes} labelKey="type" valueKey="c" />
         </Card>
       </div>
+
+      <Card title={`Visitor log · latest ${stats.recentPageviews.length} page views`}>
+        <VisitorFeed rows={stats.recentPageviews} />
+      </Card>
     </div>
   );
 }

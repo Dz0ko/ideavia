@@ -69,12 +69,22 @@ export default function ShowcasePage({ slug, kind }: { slug: string; kind: "prod
                 ) : (
                   <MagneticButton href="/contact" variant="solid">Start a Project →</MagneticButton>
                 )}
+                {product.file && (
+                  <a href={product.file.href} target="_blank" rel="noreferrer">
+                    <MagneticButton variant="outline">{product.file.label} ↗</MagneticButton>
+                  </a>
+                )}
                 <MagneticButton href={backHref} variant="outline">← {backLabel}</MagneticButton>
               </div>
             </Reveal>
           </div>
           <Reveal delay={0.1}>
-            {product.cover && product.coverAspect === "landscape" ? (
+            {product.cover && product.coverAspect === "landscape" && product.coverFrame === "none" ? (
+              <div className="overflow-hidden rounded-2xl border border-white/10 shadow-[0_40px_100px_-30px_rgba(0,0,0,0.85)]">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={product.cover} alt={`${product.name} artwork`} className="block h-auto w-full" />
+              </div>
+            ) : product.cover && product.coverAspect === "landscape" ? (
               <BrowserFrame url={product.url}>
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src={product.cover} alt={`${product.name} website`} className="block h-auto w-full" />
@@ -141,7 +151,9 @@ export default function ShowcasePage({ slug, kind }: { slug: string; kind: "prod
                 <figure className="group overflow-hidden rounded-2xl border border-white/10" style={{ background: "#0b0b10" }}>
                   <div
                     className={`relative overflow-hidden ${
-                      product.coverAspect === "landscape" ? "aspect-[16/10]" : "aspect-[4/5] p-4 sm:p-6"
+                      product.coverAspect === "landscape"
+                        ? product.coverFrame === "none" ? "aspect-[4/3] p-3 sm:p-4" : "aspect-[16/10]"
+                        : "aspect-[4/5] p-4 sm:p-6"
                     }`}
                   >
                     {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -149,7 +161,7 @@ export default function ShowcasePage({ slug, kind }: { slug: string; kind: "prod
                       src={g.src}
                       alt={g.alt}
                       className={`h-full w-full transition-transform duration-700 group-hover:scale-[1.02] ${
-                        product.coverAspect === "landscape" ? "object-cover object-top" : "object-contain"
+                        product.coverAspect === "landscape" && product.coverFrame !== "none" ? "object-cover object-top" : "object-contain"
                       } ${g.tone === "light" ? "[filter:invert(1)_hue-rotate(180deg)]" : ""}`}
                       loading="lazy"
                     />

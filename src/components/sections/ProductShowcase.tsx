@@ -23,7 +23,7 @@ export default function ProductShowcase({
   index: number;
   total: number;
 }) {
-  const shot = product.gallery?.find((g) => g.tone !== "light");
+  const shot = product.preferDemo ? undefined : product.gallery?.find((g) => g.tone !== "light");
   const hasPoster = !!product.cover && product.coverAspect !== "landscape";
 
   return (
@@ -136,6 +136,11 @@ export default function ProductShowcase({
                 <MagneticButton href={product.url} variant="outline">
                   Visit {product.url.replace(/^https?:\/\/(www\.)?/, "")} ↗
                 </MagneticButton>
+              )}
+              {product.file && (
+                <a href={product.file.href} target="_blank" rel="noreferrer">
+                  <MagneticButton variant="outline">{product.file.label} ↗</MagneticButton>
+                </a>
               )}
             </div>
           </div>

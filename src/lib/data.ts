@@ -1,3 +1,23 @@
+/** Data for the interactive brand-kit board (BrandKitDemo). */
+export type BrandKit = {
+  mark: "plate" | "squircle" | "pupil";
+  letter?: string;
+  wordmark: string;
+  tagline: string;
+  accent: string;
+  ground: string;
+  paper: string;
+  grid?: string;
+  version: string;
+  docLabel?: string;
+  typeLabel: string;
+  headline: [string, string];
+  /** Order matters: [accent, ground, panel, hairline, muted, paper, ...]. `dark` = label drawn in ground colour. */
+  colors: { name: string; hex: string; dark?: boolean }[];
+  chips: { label: string; solid?: boolean }[];
+  chipRadius?: number;
+};
+
 export type Product = {
   slug: string;
   /** "product" = something IDAEVIA offers; "project" = a case study */
@@ -23,7 +43,14 @@ export type Product = {
   steps?: string[];
   faq?: { q: string; a: string }[];
   /** Which interactive UI demo to render */
-  demo?: "nexora" | "trag" | "chatbot" | "instagram" | "x" | "website";
+  demo?: "nexora" | "trag" | "chatbot" | "instagram" | "x" | "website" | "brandkit";
+  /** Show the interactive demo in the products slide even when a screenshot exists. */
+  preferDemo?: boolean;
+  /** A downloadable deliverable (e.g. brand guidelines PDF). */
+  file?: { href: string; label: string };
+  /** Landscape covers render in a browser frame by default; "none" shows the image plainly (documents, decks). */
+  coverFrame?: "browser" | "none";
+  brandKit?: BrandKit;
   /** Platforms / integrations */
   platforms?: string[];
   /** Brand mark (square) and optional round icon, paths under /public */
@@ -179,6 +206,250 @@ export const products: Product[] = [
     faq: [
       { q: "Which platforms does it support?", a: "Instagram, X, Telegram, WhatsApp, Discord and your own website. New channels can be added." },
       { q: "Can it sound like me?", a: "Yes. Formal, friendly or flirty: the tone is yours to set, and it stays consistent across every conversation." },
+    ],
+  },
+
+  /* ------------------------------- BRANDING ------------------------------- */
+  {
+    slug: "perk-brand-kit",
+    kind: "product",
+    group: "Branding",
+    logo: "/logos/perk.png",
+    name: "PERK SOCIETY",
+    category: "BRAND KIT / WEB3 COMMUNITY",
+    headline: "A WHOLE WORLD OF PERKS.",
+    tagline: "A complete brand identity for a Solana rewards community, built by IDAEVIA.",
+    description:
+      "PERK Society is a community-driven rewards platform on Solana. We built the whole identity from scratch: the mark and logo system, the lime-on-void colour system, typography, graphic language, voice and tone, social templates and a full asset handoff, documented in a 10-page brand guidelines book.",
+    features: [
+      "Mark & logo system",
+      "Colour system",
+      "Typography",
+      "Graphic language",
+      "Voice & tone",
+      "Social templates",
+      "App icons & favicons",
+      "Asset index & handoff",
+    ],
+    accent: "#D4F71E",
+    cta: "Explore the brand kit",
+    demo: "brandkit",
+    preferDemo: true,
+    brandKit: {
+      mark: "plate",
+      letter: "P",
+      wordmark: "PERK\nSOCIETY",
+      tagline: "A whole world of perks",
+      accent: "#D4F71E",
+      ground: "#050705",
+      paper: "#E0F2E8",
+      grid: "#0D120B",
+      version: "V2 · 2026",
+      typeLabel: "Display · 900 · -2.5% tracking",
+      headline: ["SHOW UP.", "GET REWARDED."],
+      colors: [
+        { name: "Perk Lime", hex: "#D4F71E", dark: true },
+        { name: "Void Black", hex: "#050705" },
+        { name: "Panel", hex: "#0F140D" },
+        { name: "Hairline", hex: "#2F3B25" },
+        { name: "Muted", hex: "#98A292" },
+        { name: "Paper", hex: "#E0F2E8", dark: true },
+      ],
+      chips: [{ label: "Outline chip" }, { label: "Solid chip", solid: true }, { label: "Loop chip ↻" }],
+    },
+    cover: "/products/perk-brand-kit/pages/page-01.png",
+    file: { href: "/products/perk-brand-kit/perk-society-brand-guidelines.pdf", label: "View brand guidelines (PDF)" },
+    gallery: [
+      { src: "/products/perk-brand-kit/pages/page-03.png", alt: "PERK Society mark: horizontal, single line, stacked, avatar and monochrome versions" },
+      { src: "/products/perk-brand-kit/pages/page-05.png", alt: "PERK Society colour system: Perk Lime, Void Black, panel, hairline, muted, paper" },
+      { src: "/products/perk-brand-kit/pages/page-06.png", alt: "PERK Society typography: Archivo display and JetBrains Mono labels" },
+      { src: "/products/perk-brand-kit/pages/page-07.png", alt: "PERK Society graphic language: grid field, lime glow, chips and geometry" },
+      { src: "/products/perk-brand-kit/pages/page-09.png", alt: "PERK Society applications: social banner, square post, lime post and icons" },
+      { src: "/products/perk-brand-kit/pages/page-08.png", alt: "PERK Society voice: direct, confident, never overpromising" },
+    ],
+    facts: [
+      { k: "Client", v: "PERK Society" },
+      { k: "Sector", v: "Web3 · Solana · Rewards" },
+      { k: "Deliverables", v: "Brand guidelines (10 pages) + 11 logo and application files" },
+      { k: "Year", v: "2026" },
+    ],
+    highlights: [
+      { title: "One mark, every size", text: "A bold P in a rounded square that works from a 24 px favicon to a festival banner, with lime-on-dark, dark-on-lime and monochrome colourways." },
+      { title: "Lime is the accent, never the field", text: "A strict ratio rule: 80% void, 14% panel, 6% lime. The colour hits hard because it is rationed." },
+      { title: "Type with a voice", text: "Archivo 900 for display, JetBrains Mono for labels and UI. Headlines in caps, short and verb-first; body in sentence case." },
+      { title: "Ready to ship", text: "Social banners, square posts, app icons and favicons, plus a transparent-PNG asset index so the team can post on day one." },
+    ],
+    steps: ["Discovery and positioning", "Mark and logo system", "Colour, type and graphic language", "Voice, templates and asset handoff"],
+    faq: [
+      { q: "What does a brand kit from IDAEVIA include?", a: "Positioning, the mark and logo system, colour and typography, a graphic language, voice and writing rules, application templates and a complete asset handoff, all documented in a guidelines book like this one." },
+      { q: "Can you brand a product that does not exist yet?", a: "Yes. PERK Society was branded pre-launch: the identity was ready before the token, the site and the first drop." },
+    ],
+  },
+  {
+    slug: "evolution-brand-kit",
+    kind: "product",
+    group: "Branding",
+    logo: "/logos/evolution.svg",
+    name: "EVOLUTION",
+    category: "BRAND & DESIGN SYSTEM / WEB3 GAMING",
+    headline: "EVOLVE OR CASH OUT.",
+    tagline: "Identity, interface and creature system for a risk-escalation game, built by IDAEVIA.",
+    description:
+      "EVOLUTION is a game where one wager grows through a chain of evolutions: every step forward is worth more and safe for one moment less. We built the complete brand and design system: the pupil-in-ring mark, two colour variants on one base, Archivo and JetBrains Mono typography, the full HUD and game screen, a creature system of 31 forms across five worlds, environments, key moments and a ship checklist.",
+    features: [
+      "Brand core & positioning",
+      "Mark & lockups",
+      "Two colour variants",
+      "Typography & voice",
+      "Interface & HUD",
+      "Game screen",
+      "Creature system: 5 worlds, 31 forms",
+      "Environments & sound map",
+      "Key moments",
+      "Ship checklist",
+    ],
+    accent: "#2BFF88",
+    cta: "Explore the design system",
+    demo: "brandkit",
+    preferDemo: true,
+    brandKit: {
+      mark: "pupil",
+      wordmark: "EVOLUTION",
+      tagline: "Evolve or cash out",
+      accent: "#2BFF88",
+      ground: "#050706",
+      paper: "#F2F5F3",
+      grid: "#0B0F0C",
+      version: "V1.0 · 2026",
+      docLabel: "Branding kit",
+      typeLabel: "Display · 96 / 800 · JetBrains Mono for numbers",
+      headline: ["ASCENSION", "17.00x"],
+      colors: [
+        { name: "Culture", hex: "#2BFF88", dark: true },
+        { name: "Void", hex: "#050706" },
+        { name: "Chamber", hex: "#0A0E0C" },
+        { name: "Hairline", hex: "#16221B" },
+        { name: "Ash", hex: "#A8B7AE" },
+        { name: "Bone", hex: "#F2F5F3", dark: true },
+        { name: "Mutagen", hex: "#9B5CFF" },
+        { name: "High risk", hex: "#FF3B5C" },
+        { name: "Jackpot", hex: "#FFC530", dark: true },
+      ],
+      chips: [{ label: "Evolve → 22.00x", solid: true }, { label: "Cash out $850" }, { label: "Mutate · 62% fail" }],
+    },
+    cover: "/products/evolution-brand-kit/pages/page-01.png",
+    coverAspect: "landscape",
+    coverFrame: "none",
+    file: { href: "/products/evolution-brand-kit/evolution-brand-guidelines.pdf", label: "View branding kit (PDF)" },
+    gallery: [
+      { src: "/products/evolution-brand-kit/pages/page-02.png", alt: "EVOLUTION brand core: evolve or cash out, the four rules and the evolution chain" },
+      { src: "/products/evolution-brand-kit/pages/page-03.png", alt: "EVOLUTION logo: the pupil-in-ring mark, lockups and rules" },
+      { src: "/products/evolution-brand-kit/pages/page-04.png", alt: "EVOLUTION colour: Specimen Green and Unstable Violet variants on one base" },
+      { src: "/products/evolution-brand-kit/pages/page-06.png", alt: "EVOLUTION interface: buttons, HUD and mutation cards" },
+      { src: "/products/evolution-brand-kit/pages/page-07.png", alt: "EVOLUTION game screen: desktop, mid-round with the Elder Dragon" },
+      { src: "/products/evolution-brand-kit/pages/page-08.png", alt: "EVOLUTION creature system: five worlds, 31 forms" },
+      { src: "/products/evolution-brand-kit/pages/page-09.png", alt: "EVOLUTION full roster: LV 0 to LV 30" },
+      { src: "/products/evolution-brand-kit/pages/page-11.png", alt: "EVOLUTION key moments: mutation, jackpot and fail" },
+    ],
+    facts: [
+      { k: "Client", v: "EVOLUTION" },
+      { k: "Sector", v: "Web3 gaming · risk-escalation game" },
+      { k: "Deliverables", v: "12-page branding kit, UI system, 31 creature renders, 5 environments" },
+      { k: "Year", v: "2026" },
+    ],
+    highlights: [
+      { title: "One tension, one system", text: "The whole brand is built around evolve-or-cash-out. Clarity first: a new player understands bet, multiplier and two buttons in three seconds." },
+      { title: "Two variants, one base", text: "Specimen Green for launch, Unstable Violet for seasonal and jackpot skins. Roughly 80% near-black, 15% ash and bone, 5% accent." },
+      { title: "A creature system, not mascots", text: "31 forms across five worlds, from Egg to Final. Every form inherits the previous form's spine curve and eye position, then adds mass." },
+      { title: "Honest motion", text: "UI at 120 to 180 ms, evolution sequence 900 ms, skippable by tap. Animation only reveals an outcome the RNG already produced." },
+    ],
+    steps: ["Brand core and positioning", "Mark, colour and typography", "Interface, HUD and game screens", "Creature system, environments and handoff"],
+    faq: [
+      { q: "Is this a brand kit or a design system?", a: "Both. It covers the identity (mark, colour, type, voice) and the product (buttons, HUD, game screen, key moments, motion timing and a ship checklist)." },
+      { q: "Do you also produce the creature art?", a: "Yes. The kit specifies 31 creature renders across five worlds with fixed constants for silhouette, stance and lighting, and IDAEVIA produces them." },
+    ],
+  },
+  {
+    slug: "trag-brand-kit",
+    kind: "product",
+    group: "Branding",
+    logo: "/logos/trag.png",
+    name: "TRAG",
+    category: "BRAND KIT / WEB3 TRADING",
+    headline: "TRAG MEANS TRACE.",
+    tagline: "Logo, dimensional mark, typography, colour and usage rules for a Solana trading terminal, built by IDAEVIA.",
+    description:
+      "Every trade leaves a trace. The TRAG identity is built on that single idea: a mark that already looks like it is moving, a palette with exactly one signal colour, and numbers always set in mono so a rate is never mistaken for prose. The kit covers construction, four plate variants, the 3D dimensional mark, wordmark and lockups, misuse, colour, typography, applications and a full asset index.",
+    features: [
+      "Two strokes on a squircle",
+      "Four plate variants",
+      "3D dimensional mark",
+      "Wordmark & lockups",
+      "Six misuse rules",
+      "One signal, one ground",
+      "Space Grotesk · Manrope · JetBrains Mono",
+      "In-use applications",
+      "SVG + PNG asset index",
+    ],
+    accent: "#D6FF4F",
+    cta: "Explore the brand kit",
+    demo: "brandkit",
+    preferDemo: true,
+    brandKit: {
+      mark: "squircle",
+      letter: "T",
+      wordmark: "TRAG",
+      tagline: "Solana trading terminal",
+      accent: "#D6FF4F",
+      ground: "#070807",
+      paper: "#F4F6F0",
+      grid: "#0E110D",
+      version: "V1.0 · 2026",
+      docLabel: "Brand kit",
+      typeLabel: "Space Grotesk · 84 / 700 · -4.5% tracking",
+      headline: ["FAST BEFORE", "PRETTY."],
+      colors: [
+        { name: "Signal Lime", hex: "#D6FF4F", dark: true },
+        { name: "Terminal Black", hex: "#070807" },
+        { name: "Panel", hex: "#12150F" },
+        { name: "Hairline", hex: "#1E2419" },
+        { name: "Muted", hex: "#98A38F" },
+        { name: "Paper", hex: "#F4F6F0", dark: true },
+        { name: "Gain", hex: "#4ADE80", dark: true },
+        { name: "Loss", hex: "#FF5C5C" },
+        { name: "Caution", hex: "#E9B949", dark: true },
+      ],
+      chips: [{ label: "Buy", solid: true }, { label: "Sell" }, { label: "$TRAG / SOL · +18.4%" }],
+      chipRadius: 6,
+    },
+    cover: "/products/trag-brand-kit/pages/page-01.png",
+    file: { href: "/products/trag-brand-kit/trag-brand-guidelines.pdf", label: "View brand kit (PDF)" },
+    gallery: [
+      { src: "/products/trag-brand-kit/pages/page-02.png", alt: "TRAG brand kit: the idea and the construction of the mark, two strokes on a squircle" },
+      { src: "/products/trag-brand-kit/pages/page-03.png", alt: "TRAG variants: four plates, one geometry" },
+      { src: "/products/trag-brand-kit/pages/page-04.png", alt: "TRAG dimensional mark: the 3D build" },
+      { src: "/products/trag-brand-kit/pages/page-05.png", alt: "TRAG wordmark and lockups, set tight" },
+      { src: "/products/trag-brand-kit/pages/page-07.png", alt: "TRAG misuse rules and colour: one signal, one ground" },
+      { src: "/products/trag-brand-kit/pages/page-08.png", alt: "TRAG typography: Grotesk speaks, Manrope explains, Mono counts" },
+      { src: "/products/trag-brand-kit/pages/page-09.png", alt: "TRAG in use: terminal card and app icon splash" },
+      { src: "/products/trag-brand-kit/pages/page-10.png", alt: "TRAG asset index: what ships with the kit" },
+    ],
+    facts: [
+      { k: "Client", v: "TRAG" },
+      { k: "Sector", v: "Web3 · Solana trading terminal" },
+      { k: "Deliverables", v: "11-page brand kit + SVG and 2x PNG asset set" },
+      { k: "Year", v: "2026" },
+    ],
+    highlights: [
+      { title: "A mark that moves", text: "Two rounded strokes on a squircle plate, the stem leaning 15 degrees forward. It survives a browser tab strip and a stage screen alike." },
+      { title: "One signal colour", text: "Lime marks action and gain and nothing else. Green, red and amber live inside data only, never in layout." },
+      { title: "Numbers never lie", text: "Space Grotesk speaks, Manrope explains, JetBrains Mono counts. Every rate is set in mono so it is never mistaken for prose." },
+      { title: "Ready for product and print", text: "Four plate variants, a 3D dimensional mark for splash and hero art, light application for print, and a circular avatar for token and social." },
+    ],
+    steps: ["Idea and construction", "Variants and the 3D mark", "Wordmark, colour and typography", "Applications and asset handoff"],
+    faq: [
+      { q: "Is this the same TRAG as the trading terminal in Projects?", a: "Yes. IDAEVIA designed the brand and built the product. The brand kit is the identity layer; the terminal is the case study under Projects." },
+      { q: "What formats ship with the kit?", a: "SVG vectors for the mark in every variant, 2x PNG rasters for the plates, avatar and lockups, plus the three open-licence typefaces." },
     ],
   },
 
@@ -470,7 +741,7 @@ export const productItems = products.filter((p) => p.kind === "product");
 export const projectItems = products.filter((p) => p.kind === "project");
 
 /** Listing-page groups in display order */
-export const productGroups = ["Automation"];
+export const productGroups = ["Automation", "Branding"];
 export const projectGroups = ["Web3", "SaaS", "Websites"];
 
 /** Route for a product or project detail page */
@@ -518,7 +789,7 @@ export const universeNodes = [
 export const socials = [
   { key: "telegram", label: "Telegram", href: "" },
   { key: "instagram", label: "Instagram", href: "" },
-  { key: "x", label: "X", href: "" },
+  { key: "x", label: "X", href: "https://x.com/idaevia" },
   { key: "linkedin", label: "LinkedIn", href: "" },
 ];
 
@@ -627,7 +898,7 @@ export const whyIdaevia = [
 ];
 
 export const numbers = [
-  { value: 3, suffix: "", label: "Products Live" },
+  { value: 6, suffix: "", label: "Products Live" },
   { value: 20, suffix: "+", label: "Projects" },
   { value: 8, suffix: "", label: "Industries" },
   { value: 30, suffix: "+", label: "Technologies" },

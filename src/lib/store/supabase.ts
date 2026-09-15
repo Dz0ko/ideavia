@@ -51,6 +51,22 @@ async function rest<T = unknown>(path: string, init: RequestInit & { prefer?: st
 
 const q = (v: string) => encodeURIComponent(v);
 
+/**
+ * Insert a row; if the table predates a newly added optional column (schema not yet
+ * migrated), retry without those columns so tracking never breaks.
+ */
+async function insertWithFallback(table: string, row: Record<string, unknown>, optional: string[], prefer = "return=minimal") {
+  try {
+    return await rest<{ id: number }[]>(table, { method: "POST", prefer, body: JSON.stringify(row) });
+  } catch (e) {
+    const msg = String(e);
+    if (!optional.some((c) => msg.includes(`'${c}'`) || msg.includes(`"${c}"`) || msg.includes(c))) throw e;
+    const slim = { ...row };
+    for (const c of optional) delete slim[c];
+    return await rest<{ id: number }[]>(table, { method: "POST", prefer, body: JSON.stringify(slim) });
+  }
+}
+
 export const supabaseStore: Store = {
   async track(input) {
     const now = Date.now();
@@ -65,11 +81,11 @@ export const supabaseStore: Store = {
 
     const { data: existing } = await rest<{ id: string }[]>(`sessions?id=eq.${q(input.sessionId)}&select=id`);
     if (!existing?.length) {
-      await rest("sessions", {
-        method: "POST",
-        prefer: "return=minimal",
-        body: JSON.stringify({ id: input.sessionId, visitor_id: input.visitorId, started: now, last_seen: now, path: input.path, device: input.device ?? null, country: input.country ?? null }),
-      });
+      await insertWithFallback(
+        "sessions",
+        { id: input.sessionId, visitor_id: input.visitorId, started: now, last_seen: now, path: input.path, device: input.device ?? null, country: input.country ?? null, city: input.city ?? null },
+        ["city"]
+      );
       const { data: v } = await rest<{ visits: number }[]>(`visitors?id=eq.${q(input.visitorId)}&select=visits`);
       await rest(`visitors?id=eq.${q(input.visitorId)}`, { method: "PATCH", prefer: "return=minimal", body: JSON.stringify({ visits: (v?.[0]?.visits ?? 0) + 1, last_seen: now }) });
     } else {
@@ -77,20 +93,21 @@ export const supabaseStore: Store = {
     }
 
     if (input.kind === "pageview") {
-      await rest("pageviews", {
-        method: "POST",
-        prefer: "return=minimal",
-        body: JSON.stringify({ ts: now, visitor_id: input.visitorId, session_id: input.sessionId, path: input.path, referrer: input.referrer ?? null, ua: input.ua ?? null, device: input.device ?? null, country: input.country ?? null, screen_w: input.screenW ?? null }),
-      });
+      await insertWithFallback(
+        "pageviews",
+        { ts: now, visitor_id: input.visitorId, session_id: input.sessionId, path: input.path, referrer: input.referrer ?? null, ua: input.ua ?? null, device: input.device ?? null, country: input.country ?? null, city: input.city ?? null, screen_w: input.screenW ?? null },
+        ["city"]
+      );
     }
   },
 
   async addSubmission(s) {
-    const { data } = await rest<{ id: number }[]>("submissions", {
-      method: "POST",
-      prefer: "return=representation",
-      body: JSON.stringify({ ts: Date.now(), type: s.type ?? null, idea: s.idea ?? null, name: s.name, company: s.company ?? null, email: s.email, budget: s.budget ?? null, country: s.country ?? null, source: s.source ?? null, status: "new" }),
-    });
+    const { data } = await insertWithFallback(
+      "submissions",
+      { ts: Date.now(), type: s.type ?? null, idea: s.idea ?? null, name: s.name, company: s.company ?? null, email: s.email, budget: s.budget ?? null, country: s.country ?? null, source: s.source ?? null, contact: s.contact ?? null, status: "new" },
+      ["contact"],
+      "return=representation"
+    );
     return data[0].id;
   },
 
@@ -114,9 +131,14 @@ export const supabaseStore: Store = {
     since.setHours(0, 0, 0, 0);
     const sinceTs = since.getTime() - (days - 1) * DAY;
 
+    // `city` may not exist yet if schema.sql was not re-run; fall back to the older column set.
+    const selectPv = (withCity: boolean) =>
+      rest<Parameters<typeof aggregate>[0]["pageviews"]>(`pageviews?select=ts,visitor_id,session_id,path,referrer,device,country,ua,screen_w${withCity ? ",city" : ""}&ts=gte.${sinceTs}&order=ts.desc&limit=20000`);
+    const selectSess = (withCity: boolean) =>
+      rest<Parameters<typeof aggregate>[0]["sessions"]>(`sessions?select=id,visitor_id,started,last_seen,path,device,country${withCity ? ",city" : ""}&last_seen=gte.${Date.now() - DAY}&order=last_seen.desc&limit=5000`);
     const [pv, sessions, subs, visitors, pvTotal, sessTotal] = await Promise.all([
-      rest<Parameters<typeof aggregate>[0]["pageviews"]>(`pageviews?select=ts,visitor_id,session_id,path,referrer,device,country&ts=gte.${sinceTs}&order=ts.desc&limit=20000`),
-      rest<Parameters<typeof aggregate>[0]["sessions"]>(`sessions?select=id,visitor_id,started,last_seen,path,device,country&last_seen=gte.${Date.now() - DAY}&order=last_seen.desc&limit=5000`),
+      selectPv(true).catch(() => selectPv(false)),
+      selectSess(true).catch(() => selectSess(false)),
       rest<Parameters<typeof aggregate>[0]["submissions"]>(`submissions?select=*&order=ts.desc&limit=1000`),
       rest<unknown[]>(`visitors?select=id&limit=1`, { prefer: "count=exact" }),
       rest<unknown[]>(`pageviews?select=id&limit=1`, { prefer: "count=exact" }),

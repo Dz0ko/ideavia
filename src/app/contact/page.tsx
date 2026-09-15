@@ -2,8 +2,11 @@
 
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
+import dynamic from "next/dynamic";
 import RevealText from "@/components/ui/RevealText";
 import Wordmark from "@/components/ui/Wordmark";
+
+const IdaeviaCore = dynamic(() => import("@/components/three/IdaeviaCore"), { ssr: false });
 
 const buildOptions = [
   "Website / Landing Page",
@@ -31,6 +34,7 @@ export default function ContactPage() {
     name: "",
     company: "",
     email: "",
+    contact: "",
     budget: "",
   });
   const [submitted, setSubmitted] = useState(false);
@@ -40,7 +44,7 @@ export default function ContactPage() {
   const [website, setWebsite] = useState("");
   const [startedAt] = useState(() => Date.now());
 
-  const canSubmit = !!(form.name && form.email && type) && !sending;
+  const canSubmit = !!(form.name && form.email && form.contact.trim().length >= 3 && type) && !sending;
 
   async function submit() {
     setSending(true);
@@ -144,7 +148,13 @@ export default function ContactPage() {
                   value={form.email}
                   onChange={(v) => setForm({ ...form, email: v })}
                 />
-                <div>
+                <Field
+                  label="Telegram or WhatsApp"
+                  placeholder="@username or +389 70 000 000"
+                  value={form.contact}
+                  onChange={(v) => setForm({ ...form, contact: v })}
+                />
+                <div className="sm:col-span-2">
                   <label className="eyebrow">Budget</label>
                   <div className="mt-5 flex flex-wrap gap-2">
                     {budgets.map((b) => (
@@ -192,11 +202,13 @@ function Field({
   value,
   onChange,
   type = "text",
+  placeholder,
 }: {
   label: string;
   value: string;
   onChange: (v: string) => void;
   type?: string;
+  placeholder?: string;
 }) {
   return (
     <div>
@@ -204,8 +216,9 @@ function Field({
       <input
         type={type}
         value={value}
+        placeholder={placeholder}
         onChange={(e) => onChange(e.target.value)}
-        className="mt-4 w-full border-b border-white/12 bg-transparent pb-3 text-lg text-white outline-none transition-colors focus:border-accent"
+        className="mt-4 w-full border-b border-white/12 bg-transparent pb-3 text-lg text-white outline-none transition-colors placeholder:text-chalk/25 focus:border-accent"
       />
     </div>
   );
@@ -217,23 +230,26 @@ function Success() {
       key="success"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      className="fixed inset-0 z-30 flex flex-col items-center justify-center bg-ink text-center"
+      className="fixed inset-0 z-30 flex flex-col items-center justify-center overflow-hidden bg-ink text-center"
     >
-      <motion.span
-        className="h-3 w-3 rounded-full bg-accent"
-        initial={{ scale: 0 }}
-        animate={{ scale: [0, 1, 40] }}
-        transition={{ duration: 1.4, ease: "easeInOut" }}
-        style={{ boxShadow: "0 0 60px #5b6bff" }}
-      />
+      {/* the globe drops in behind the message */}
       <motion.div
-        initial={{ opacity: 0, y: 20 }}
+        className="absolute inset-0"
+        initial={{ opacity: 0, y: "-60%", scale: 0.85 }}
+        animate={{ opacity: 1, y: "0%", scale: 1 }}
+        transition={{ duration: 2, ease: [0.19, 1, 0.22, 1] }}
+      >
+        <IdaeviaCore className="h-full w-full" accent="#5b6bff" />
+      </motion.div>
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(5,5,6,0.55)_0%,rgba(5,5,6,0.2)_45%,rgba(5,5,6,0.9)_100%)]" />
+      <motion.div
+        initial={{ opacity: 0, y: 24 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 1.2 }}
-        className="relative"
+        transition={{ delay: 0.9, duration: 1, ease: [0.19, 1, 0.22, 1] }}
+        className="pointer-events-none relative px-6"
       >
         <h2 className="display text-[clamp(2.5rem,8vw,6rem)]">IDEA RECEIVED.</h2>
-        <p className="mt-6 text-chalk/60">The journey starts here.</p>
+        <p className="mt-6 text-chalk/70">The journey starts here.</p>
         <p className="mt-12 text-2xl font-semibold tracking-[0.4em]"><Wordmark /></p>
       </motion.div>
     </motion.section>

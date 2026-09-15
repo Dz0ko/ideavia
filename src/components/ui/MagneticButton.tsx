@@ -36,7 +36,7 @@ export default function MagneticButton({
   };
 
   const base =
-    "group relative inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-medium tracking-wide transition-colors duration-300";
+    "group relative inline-flex items-center gap-2 whitespace-nowrap rounded-full px-6 py-3 text-sm font-medium tracking-wide transition-colors duration-300";
   const styles = {
     solid: "bg-white text-ink hover:bg-accent hover:text-white",
     outline:

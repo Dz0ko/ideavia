@@ -18,7 +18,7 @@ export default function ProductsPage() {
         groups={productGroups}
         eyebrow="Built by IDAEVIA"
         title="OUR PRODUCTS."
-        intro="Tools we build and operate ourselves: growth automation for X and Instagram, and AI chatbots that run conversations on any platform."
+        intro="Tools we build and operate ourselves: growth automation for X and Instagram, AI chatbots that run conversations on any platform, and complete brand kits designed in-house."
       />
       <ProductCarousel items={productItems} />
       <CtaBanner />

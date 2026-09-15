@@ -10,6 +10,9 @@ import {
   HourlyBars,
   StatTile,
   StatusBadge,
+  VisitorFeed,
+  countryName,
+  flag,
   fmtDate,
   timeAgo,
 } from "@/components/admin/ui";
@@ -76,8 +79,9 @@ export default function AdminOverview() {
                   <div className="min-w-0">
                     <div className="truncate font-medium">{s.path}</div>
                     <div className="text-xs text-chalk/40">
-                      {s.device ?? "?"} {s.country ? `· ${s.country}` : ""} · on site{" "}
-                      {timeAgo(s.started).replace(" ago", "")}
+                      <span className="capitalize">{s.device ?? "?"}</span>
+                      {s.country ? ` · ${flag(s.country)} ${countryName(s.country)}` : ""}
+                      {s.city ? ` · ${s.city}` : ""} · on site {timeAgo(s.started).replace(" ago", "")}
                     </div>
                   </div>
                   <span className="ml-3 h-2 w-2 shrink-0 rounded-full bg-[#34e0a1]" />
@@ -119,37 +123,15 @@ export default function AdminOverview() {
         </Card>
       </div>
 
-      <Card title="Live feed · latest page views">
-        {stats.recentPageviews.length === 0 ? (
-          <Empty>No traffic recorded yet. Open the site in another tab.</Empty>
-        ) : (
-          <div className="overflow-x-auto">
-            <table className="w-full text-sm">
-              <thead className="text-left text-[11px] uppercase tracking-wider text-chalk/40">
-                <tr>
-                  <th className="py-2 pr-4">When</th>
-                  <th className="py-2 pr-4">Page</th>
-                  <th className="py-2 pr-4">Referrer</th>
-                  <th className="py-2 pr-4">Device</th>
-                  <th className="py-2 pr-4">Country</th>
-                  <th className="py-2">Visitor</th>
-                </tr>
-              </thead>
-              <tbody>
-                {stats.recentPageviews.map((p, i) => (
-                  <tr key={i} className="border-t border-white/5">
-                    <td className="py-1.5 pr-4 whitespace-nowrap text-chalk/50">{timeAgo(p.ts)}</td>
-                    <td className="py-1.5 pr-4 font-medium">{p.path}</td>
-                    <td className="max-w-[220px] truncate py-1.5 pr-4 text-chalk/50">{p.referrer || "(direct)"}</td>
-                    <td className="py-1.5 pr-4 text-chalk/50">{p.device ?? "—"}</td>
-                    <td className="py-1.5 pr-4 text-chalk/50">{p.country ?? "—"}</td>
-                    <td className="py-1.5 font-mono text-xs text-chalk/35">{p.visitor_id.slice(0, 8)}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        )}
+      <Card
+        title="Live feed · latest page views"
+        action={
+          <Link href="/admin/analytics" className="text-xs text-chalk/50 hover:text-white">
+            Full log →
+          </Link>
+        }
+      >
+        <VisitorFeed rows={stats.recentPageviews} limit={30} />
       </Card>
     </div>
   );

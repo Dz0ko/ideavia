@@ -13,6 +13,17 @@ function deviceFromUA(ua: string) {
   return "desktop";
 }
 
+/** City from the hosting provider's geo header (Vercel URL-encodes it). */
+function geoCity(req: NextRequest) {
+  const raw = req.headers.get("x-vercel-ip-city") || req.headers.get("cf-ipcity");
+  if (!raw) return null;
+  try {
+    return clean(decodeURIComponent(raw), 80) || null;
+  } catch {
+    return clean(raw, 80) || null;
+  }
+}
+
 /** First-party analytics beacon. Same-origin only, rate limited, strictly validated. */
 export async function POST(req: NextRequest) {
   if (!sameOrigin(req)) return NextResponse.json({ ok: false }, { status: 403 });
@@ -52,6 +63,7 @@ export async function POST(req: NextRequest) {
     ua,
     device: deviceFromUA(ua),
     country: req.headers.get("x-vercel-ip-country") || req.headers.get("cf-ipcountry") || null,
+    city: geoCity(req),
     screenW: Number.isFinite(screenW) && screenW > 0 && screenW < 10000 ? Math.round(screenW) : null,
   });
   return NextResponse.json({ ok: true }, { headers: { "Cache-Control": "no-store" } });

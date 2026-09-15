@@ -7,8 +7,8 @@ const startOfDay = (ts: number) => {
   return d.getTime();
 };
 
-type PV = { ts: number; visitor_id: string; session_id: string; path: string; referrer: string | null; device: string | null; country: string | null };
-type S = { id: string; visitor_id: string; started: number; last_seen: number; path: string; device: string | null; country: string | null };
+type PV = { ts: number; visitor_id: string; session_id: string; path: string; referrer: string | null; device: string | null; country: string | null; city?: string | null; ua?: string | null; screen_w?: number | null };
+type S = { id: string; visitor_id: string; started: number; last_seen: number; path: string; device: string | null; country: string | null; city?: string | null };
 type Sub = Record<string, unknown> & { ts: number; status: string; type: string | null };
 
 /** Pure aggregation used by stores that cannot run the SQL in db.ts (e.g. PostgREST). */
@@ -28,7 +28,7 @@ export function aggregate(opts: {
     .filter((s) => s.last_seen > activeWindow)
     .sort((a, b) => b.last_seen - a.last_seen)
     .slice(0, 50)
-    .map(({ id, path, started, last_seen, device, country }) => ({ id, path, started, last_seen, device, country }));
+    .map(({ id, path, started, last_seen, device, country, city }) => ({ id, path, started, last_seen, device, country, city: city ?? null }));
 
   const todayPv = pageviews.filter((p) => p.ts >= today);
   const count = <T>(arr: T[], key: (x: T) => string) => {
@@ -67,8 +67,10 @@ export function aggregate(opts: {
   const submissionTypes = Array.from(count(submissions, (s) => s.type || "unspecified"))
     .map(([type, c]) => ({ type, c })).sort((a, b) => b.c - a.c);
 
-  const recentPageviews = [...pageviews].sort((a, b) => b.ts - a.ts).slice(0, 40)
-    .map(({ ts, path, referrer, device, country, visitor_id }) => ({ ts, path, referrer, device, country, visitor_id }));
+  const recentPageviews = [...pageviews].sort((a, b) => b.ts - a.ts).slice(0, 100)
+    .map(({ ts, path, referrer, device, country, city, ua, screen_w, visitor_id }) => ({
+      ts, path, referrer, device, country, city: city ?? null, ua: ua ?? null, screen_w: screen_w ?? null, visitor_id,
+    }));
   const recentSubmissions = [...submissions].sort((a, b) => b.ts - a.ts).slice(0, 6);
 
   return {

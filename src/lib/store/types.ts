@@ -10,6 +10,7 @@ export type TrackInput = {
   ua?: string | null;
   device?: string | null;
   country?: string | null;
+  city?: string | null;
   screenW?: number | null;
   kind: "pageview" | "heartbeat";
 };
@@ -23,6 +24,8 @@ export type SubmissionInput = {
   budget?: string | null;
   country?: string | null;
   source?: string | null;
+  /** Telegram handle or WhatsApp number. */
+  contact?: string | null;
 };
 
 export type Submission = {
@@ -37,6 +40,7 @@ export type Submission = {
   status: string;
   country: string | null;
   source?: string | null;
+  contact?: string | null;
 };
 
 export const SUBMISSION_STATUSES = ["new", "contacted", "in_progress", "won", "archived"] as const;

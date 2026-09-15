@@ -51,6 +51,11 @@ create table if not exists public.submissions (
 );
 create index if not exists submissions_ts_idx on public.submissions (ts desc);
 
+-- Additive migrations (safe to re-run): city per visit, Telegram/WhatsApp contact per submission.
+alter table public.pageviews   add column if not exists city text;
+alter table public.sessions    add column if not exists city text;
+alter table public.submissions add column if not exists contact text;
+
 -- Lock everything down. Service role bypasses RLS; anon/authenticated get nothing.
 alter table public.visitors    enable row level security;
 alter table public.sessions    enable row level security;
