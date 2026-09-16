@@ -35,7 +35,7 @@ const TEAM: { name: string; role: string; initials: string; text: string; linked
     role: "COO",
     initials: "PD",
     text: "Runs automation and development at IDAEVIA: engineering, delivery and the systems that keep every project moving efficiently from build to launch.",
-    linkedin: null,
+    linkedin: "https://www.linkedin.com/in/petar-dzidzev-b451701b9/",
     photo: null,
   },
 ];
