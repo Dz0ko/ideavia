@@ -1,0 +1,123 @@
+"use client";
+
+import dynamic from "next/dynamic";
+import { motion, useScroll, useTransform } from "framer-motion";
+import { useRef } from "react";
+import MagneticButton from "@/components/ui/MagneticButton";
+import { useSiteReady } from "@/lib/ready";
+
+const IdaeviaCore = dynamic(() => import("@/components/three/IdaeviaCore"), {
+  ssr: false,
+});
+
+const EASE: [number, number, number, number] = [0.19, 1, 0.22, 1];
+
+export default function Hero() {
+  const ref = useRef<HTMLElement>(null);
+  const ready = useSiteReady();
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start start", "end start"],
+  });
+  const y = useTransform(scrollYProgress, [0, 1], [0, 180]);
+  const opacity = useTransform(scrollYProgress, [0, 0.7], [1, 0]);
+  const scale = useTransform(scrollYProgress, [0, 1], [1, 1.25]);
+
+  const fade = (delay: number) => ({
+    initial: false as const,
+    animate: ready ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 },
+    transition: { delay, duration: 1, ease: EASE },
+  });
+
+  return (
+    <section
+      ref={ref}
+      className="relative flex min-h-[100svh] items-end overflow-hidden pt-24 pb-16 lg:items-center lg:pb-0 lg:pt-0"
+    >
+      {/* 3D core */}
+      <motion.div
+        style={{ scale, opacity }}
+        className="absolute inset-0 z-0"
+      >
+        {/* on phones the globe sits in the top half, dimmed, so the copy below stays readable */}
+        <div className="relative h-full w-full -translate-y-[24%] scale-[0.95] opacity-60 lg:translate-y-0 lg:translate-x-[30%] lg:scale-[0.88] lg:opacity-100 xl:translate-x-[33%]">
+          {/* the globe drops in from above once the site is ready */}
+          <motion.div
+            className="h-full w-full"
+            initial={false}
+            animate={ready ? { opacity: 1, y: "0%", scale: 1 } : { opacity: 0, y: "-70%", scale: 0.85 }}
+            transition={{ duration: 2.2, ease: EASE, delay: 0.1 }}
+          >
+            <IdaeviaCore className="h-full w-full" accent="#5b6bff" />
+          </motion.div>
+        </div>
+      </motion.div>
+
+      {/* radial vignette */}
+      <div className="pointer-events-none absolute inset-0 z-[1] bg-[radial-gradient(ellipse_at_center,transparent_35%,rgba(5,5,6,0.85)_100%)]" />
+      {/* phones: dark ground behind the copy */}
+      <div className="pointer-events-none absolute inset-0 z-[1] bg-gradient-to-b from-transparent via-ink/75 to-ink lg:hidden" />
+
+      <motion.div
+        style={{ y, opacity }}
+        className="container-x pointer-events-none relative z-10 w-full"
+      >
+        <motion.div {...fade(0.3)} className="eyebrow mb-6">
+          IDÆVIA · <span className="italic normal-case tracking-normal">ideæ via</span> · the path of the idea
+        </motion.div>
+
+        <h1 className="display text-[clamp(3rem,11vw,10rem)]">
+          <OverflowLine ready={ready} delay={0.4}>FROM IDEA</OverflowLine>
+          <OverflowLine ready={ready} delay={0.55}>
+            TO <span className="accent-text">REALITY.</span>
+          </OverflowLine>
+        </h1>
+
+        <motion.p
+          {...fade(0.85)}
+          className="mt-6 max-w-xl text-base leading-relaxed text-chalk/75 md:mt-8 md:text-lg lg:text-chalk/60"
+        >
+          We design and build every kind of digital product: Web3 platforms,
+          games, marketplaces, websites, SaaS, mobile apps, AI, full branding
+          and social media marketing automation.
+        </motion.p>
+
+        <motion.div
+          {...fade(1.0)}
+          className="pointer-events-auto mt-10 flex flex-wrap gap-4"
+        >
+          <MagneticButton href="/#explore" variant="solid">
+            Explore IDAEVIA →
+          </MagneticButton>
+          <MagneticButton href="/contact" variant="outline">
+            Start a Project →
+          </MagneticButton>
+        </motion.div>
+      </motion.div>
+
+    </section>
+  );
+}
+
+function OverflowLine({
+  children,
+  delay,
+  ready,
+}: {
+  children: React.ReactNode;
+  delay: number;
+  ready: boolean;
+}) {
+  return (
+    <span className="block overflow-hidden">
+      <motion.span
+        className="block"
+        initial={false}
+        animate={ready ? { y: 0 } : { y: "110%" }}
+        transition={{ delay, duration: 1.1, ease: EASE }}
+      >
+        {children}
+      </motion.span>
+    </span>
+  );
+}
