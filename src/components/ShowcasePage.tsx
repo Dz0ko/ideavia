@@ -127,18 +127,23 @@ export default function ShowcasePage({ slug, kind }: { slug: string; kind: "prod
         </section>
       )}
 
-      {/* Interactive demo first for products without a video */}
-      {!product.video && (
+      {/* Video (real, or a reserved slot while it is in production) */}
+      {(product.video || product.videoPlaceholder) && (
         <section className="container-x pb-24">
-          <div className="eyebrow mb-8">Live demo</div>
-          <ProductPreview product={product} />
+          {product.videoPlaceholder && !product.video && <div className="eyebrow mb-8">Gameplay video · coming soon</div>}
+          <VideoPlaceholder
+            label={product.video ? `${product.name} · PRESENTATION` : `${product.name} · GAMEPLAY VIDEO · COMING SOON`}
+            accent={product.accent}
+            src={product.video}
+          />
         </section>
       )}
 
-      {/* Video */}
-      {product.video && (
+      {/* Interactive demo for products without a video */}
+      {!product.video && (
         <section className="container-x pb-24">
-          <VideoPlaceholder label={`${product.name} · PRESENTATION`} accent={product.accent} src={product.video} />
+          <div className="eyebrow mb-8">{product.demo === "brandkit" ? "Brand system" : "Live demo"}</div>
+          <ProductPreview product={product} />
         </section>
       )}
 

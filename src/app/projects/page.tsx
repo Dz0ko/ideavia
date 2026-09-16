@@ -5,7 +5,7 @@ import { projectItems, projectGroups } from "@/lib/data";
 
 export const metadata: Metadata = {
   title: "Projects",
-  description: "Selected platforms IDAEVIA has designed and built: TRAG, the Solana trading terminal, and NEXORA CRM for creator agencies.",
+  description: "Selected platforms IDAEVIA has designed and built: TRAG, the Solana trading terminal, NEXORA CRM for creator agencies, and WHIRLWIND, our own fantasy strategy game.",
 };
 
 export default function ProjectsPage() {
@@ -17,7 +17,7 @@ export default function ProjectsPage() {
         groups={projectGroups}
         eyebrow="Selected Projects"
         title="PROJECTS WE'VE BUILT."
-        intro="Platforms and products we've designed, engineered and shipped. Each one comes with a full case study, a live demo and a presentation."
+        intro="Platforms and products we've designed, engineered and shipped, plus what we're building for ourselves right now. Each one comes with a full case study, a live demo and a presentation."
       />
       <CtaBanner />
     </main>

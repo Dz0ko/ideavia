@@ -94,8 +94,8 @@ export default function ProductShowcase({
                 </ul>
               </div>
               <div className="min-w-0">
-                {product.video ? (
-                  <VideoPlaceholder label={`${product.name} · PRESENTATION`} accent={product.accent} src={product.video} />
+                {product.video || product.videoPlaceholder ? (
+                  <VideoPlaceholder label={`${product.name} · GAMEPLAY VIDEO · COMING SOON`} accent={product.accent} src={product.video} />
                 ) : product.demo ? (
                   <ProductPreview product={product} />
                 ) : (

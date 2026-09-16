@@ -46,6 +46,8 @@ export type Product = {
   demo?: "nexora" | "trag" | "chatbot" | "instagram" | "x" | "website" | "brandkit";
   /** Show the interactive demo in the products slide even when a screenshot exists. */
   preferDemo?: boolean;
+  /** Reserve a presentation-video slot on the detail page before the video exists. */
+  videoPlaceholder?: boolean;
   /** A downloadable deliverable (e.g. brand guidelines PDF). */
   file?: { href: string; label: string };
   /** Landscape covers render in a browser frame by default; "none" shows the image plainly (documents, decks). */
@@ -453,31 +455,40 @@ export const products: Product[] = [
     ],
   },
   {
-    slug: "whirlwind-brand-kit",
-    kind: "product",
-    group: "Branding",
+    slug: "whirlwind",
+    kind: "project",
+    group: "Gaming",
     logo: "/logos/whirlwind.svg",
     name: "WHIRLWIND",
-    category: "BRAND KIT / FANTASY STRATEGY GAME",
-    headline: "THE STORM REMEMBERS.",
-    tagline: "Brand guidelines, logo system and press kit for WHIRLWIND: The Last Egg, built by IDAEVIA.",
+    category: "GAME / FANTASY STRATEGY · IN DEVELOPMENT",
+    headline: "BUILD YOUR SANCTUARY. HOLD THE STORM.",
+    tagline: "Our own fantasy strategy game, built from zero. Playable prototype, pre-MVP.",
     description:
-      "WHIRLWIND: The Last Egg is a single-player fantasy strategy game: tower defense, territory expansion and tactical squad control in one persistent campaign. The brand is a vigil at night: near-black plum, candle gold and one living emerald light at the center. We built the whole system: the Cinzel wordmark and diamond sigil, colour, typography, interface elements, imagery direction, voice and tone, a press kit and store applications.",
+      "WHIRLWIND: The Last Egg is a single-player fantasy strategy game we are building in-house: tower defense, territory expansion and tactical squad control in one persistent campaign. Players start with a small sanctuary around the last dragon egg, defend it against storm creatures, expand their territory and command a small team of specialised defenders while the egg evolves through six forms. The game, the brand and the press kit are all IDAEVIA work, from the first sketch to the playable prototype.",
     features: [
-      "Brand essence",
-      "Wordmark, sigil & lockups",
-      "Colour: plum, gold, emerald",
-      "Typography: Cinzel & Cormorant",
-      "Interface elements",
-      "Imagery direction",
-      "Voice & tone",
-      "Press kit & fact sheet",
-      "Store capsule, social, icon",
+      "Persistent battlefield",
+      "Tower defense",
+      "Territory expansion",
+      "Tactical squad control",
+      "Creature evolution: 6 forms",
+      "Risk vs. reward zones",
+      "3 boss encounters",
+      "Web browser · mouse · desktop",
+      "Full brand kit & press kit",
     ],
     accent: "#c9a961",
-    cta: "Explore the brand kit",
+    cta: "Explore WHIRLWIND",
     demo: "brandkit",
     preferDemo: true,
+    videoPlaceholder: true,
+    stats: [
+      { value: "10", label: "levels playable" },
+      { value: "38", label: "levels planned" },
+      { value: "6", label: "creature forms" },
+      { value: "4", label: "defensive structures" },
+      { value: "3", label: "controllable units" },
+      { value: "3", label: "boss encounters" },
+    ],
     brandKit: {
       mark: "sigil",
       wordmark: "WHIRLWIND",
@@ -503,38 +514,38 @@ export const products: Product[] = [
       ],
       chips: [{ label: "Continue journey ›" }, { label: "Current stage", solid: true }, { label: "Locked" }],
     },
-    cover: "/products/whirlwind-brand-kit/pages/page-01.png",
+    cover: "/projects/whirlwind/cover.png",
     coverAspect: "landscape",
     coverFrame: "none",
-    file: { href: "/products/whirlwind-brand-kit/whirlwind-brand-guidelines.pdf", label: "View brand kit (PDF)" },
+    file: { href: "/projects/whirlwind/whirlwind-brand-guidelines.pdf", label: "View brand kit (PDF)" },
     gallery: [
-      { src: "/products/whirlwind-brand-kit/pages/page-03.png", alt: "WHIRLWIND brand essence: make the player care about what they built" },
-      { src: "/products/whirlwind-brand-kit/pages/page-05.png", alt: "WHIRLWIND logo system: stacked and horizontal lockups, sigil sizes" },
-      { src: "/products/whirlwind-brand-kit/pages/page-06.png", alt: "WHIRLWIND lockups on ivory, on gold, on key art and the sigil" },
-      { src: "/products/whirlwind-brand-kit/pages/page-08.png", alt: "WHIRLWIND colour: night plum, candle gold, one emerald light" },
-      { src: "/products/whirlwind-brand-kit/pages/page-10.png", alt: "WHIRLWIND signal colours: egg emerald, ember, frost, and the proportion rule" },
-      { src: "/products/whirlwind-brand-kit/pages/page-13.png", alt: "WHIRLWIND typography: carved capitals, quiet body" },
-      { src: "/products/whirlwind-brand-kit/pages/page-15.png", alt: "WHIRLWIND interface elements: thin lines, no radius, no shadows" },
-      { src: "/products/whirlwind-brand-kit/pages/page-16.png", alt: "WHIRLWIND imagery: the light is always the egg" },
-      { src: "/products/whirlwind-brand-kit/pages/page-18.png", alt: "WHIRLWIND voice and tone: an oath, not a slogan" },
-      { src: "/products/whirlwind-brand-kit/pages/page-19.png", alt: "WHIRLWIND press kit: fact sheet and project snapshot" },
+      { src: "/projects/whirlwind/pages/page-03.png", alt: "WHIRLWIND brand essence: make the player care about what they built" },
+      { src: "/projects/whirlwind/pages/page-05.png", alt: "WHIRLWIND logo system: stacked and horizontal lockups, sigil sizes" },
+      { src: "/projects/whirlwind/pages/page-06.png", alt: "WHIRLWIND lockups on ivory, on gold, on key art and the sigil" },
+      { src: "/projects/whirlwind/pages/page-08.png", alt: "WHIRLWIND colour: night plum, candle gold, one emerald light" },
+      { src: "/projects/whirlwind/pages/page-10.png", alt: "WHIRLWIND signal colours: egg emerald, ember, frost, and the proportion rule" },
+      { src: "/projects/whirlwind/pages/page-13.png", alt: "WHIRLWIND typography: carved capitals, quiet body" },
+      { src: "/projects/whirlwind/pages/page-15.png", alt: "WHIRLWIND interface elements: thin lines, no radius, no shadows" },
+      { src: "/projects/whirlwind/pages/page-16.png", alt: "WHIRLWIND imagery: the light is always the egg" },
+      { src: "/projects/whirlwind/pages/page-18.png", alt: "WHIRLWIND voice and tone: an oath, not a slogan" },
+      { src: "/projects/whirlwind/pages/page-19.png", alt: "WHIRLWIND press kit: fact sheet and project snapshot" },
     ],
     facts: [
-      { k: "Client", v: "WHIRLWIND: The Last Egg" },
-      { k: "Sector", v: "Gaming · fantasy strategy / tower defense" },
-      { k: "Deliverables", v: "22-page brand kit: logo system, colour, type, UI, imagery, voice, press kit" },
-      { k: "Year", v: "2026" },
+      { k: "Project", v: "WHIRLWIND: The Last Egg · IDAEVIA original" },
+      { k: "Genre", v: "Fantasy strategy · tower defense · single player" },
+      { k: "Platform", v: "Web browser · mouse · desktop" },
+      { k: "Status", v: "Playable prototype · pre-MVP · 2026" },
     ],
     highlights: [
-      { title: "A vigil, not a spectacle", text: "The brand is quiet, ceremonial and patient: 80% dark ground, 15% ivory type, 5% gold. Emerald and ember are signals reserved for the egg, the evolution line and warnings." },
-      { title: "One typographic logo", text: "Cinzel Medium with wide tracking and the diamond sigil as the only ornament. The sigil is the egg on its plinth seen from above: four gates, one center." },
-      { title: "Interface with rules", text: "Thin one-pixel ash borders, square corners, no shadows. Gold marks the current choice; everything else waits in ivory or fog." },
-      { title: "Ready for the store", text: "Fact sheet, core loop, key features, store capsule, social tiles and icons, so the game can be pitched and listed on day one." },
+      { title: "Every victory strengthens the sanctuary", text: "Walls, towers, territory and unused resources carry into the next stage. The battlefield is persistent, so what you build matters." },
+      { title: "Strategy through positioning", text: "Wall, Hearth, Arrow Tower and Vortex run on their own. You command the Warden, Archer and Mender directly; where you stand decides the battle." },
+      { title: "Risk vs. reward", text: "Enemies yield 1, 3 or 5 Force by zone. Let them closer for more, at the cost of your defenses." },
+      { title: "The last egg evolves", text: "Egg, Hatch, Baby, Scout, Hunter, Beast: the protected creature evolves through six forms, a visual record of everything you have held." },
     ],
-    steps: ["Brand essence and positioning", "Wordmark, sigil and colour", "Typography, interface and imagery", "Voice, press kit and applications"],
+    steps: ["Concept and core loop", "Brand, press kit and key art", "Playable prototype: 10 levels", "MVP: 38-level campaign, more regions and forms"],
     faq: [
-      { q: "Can you brand a game before it ships?", a: "Yes. WHIRLWIND is a playable prototype; the brand, press kit and store assets were built ahead of launch so the campaign can grow into an existing identity." },
-      { q: "Does the kit cover the in-game UI?", a: "Yes. Buttons, stage cards, glyphs, dividers and the type scale for HUD, menus and data are all specified in the interface section." },
+      { q: "Is WHIRLWIND a client project?", a: "No. It is an IDAEVIA original: game design, art direction, brand and code are all built in-house from zero." },
+      { q: "When does it launch?", a: "It is a playable prototype today, before MVP. The campaign is being expanded from 10 to 38 levels with additional regions, creature forms and boss encounters." },
     ],
   },
 
@@ -827,7 +838,7 @@ export const projectItems = products.filter((p) => p.kind === "project");
 
 /** Listing-page groups in display order */
 export const productGroups = ["Automation", "Branding"];
-export const projectGroups = ["Web3", "SaaS", "Websites"];
+export const projectGroups = ["Web3", "Gaming", "SaaS", "Websites"];
 
 /** Route for a product or project detail page */
 export const hrefFor = (p: Product) =>
@@ -982,7 +993,7 @@ export const whyIdaevia = [
 ];
 
 export const numbers = [
-  { value: 7, suffix: "", label: "Products Live" },
+  { value: 6, suffix: "", label: "Products Live" },
   { value: 20, suffix: "+", label: "Projects" },
   { value: 8, suffix: "", label: "Industries" },
   { value: 30, suffix: "+", label: "Technologies" },
