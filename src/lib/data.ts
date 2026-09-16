@@ -480,7 +480,7 @@ export const products: Product[] = [
     cta: "Explore WHIRLWIND",
     demo: "brandkit",
     preferDemo: true,
-    videoPlaceholder: true,
+    video: "/videos/whirlwind.mp4",
     stats: [
       { value: "10", label: "levels playable" },
       { value: "38", label: "levels planned" },

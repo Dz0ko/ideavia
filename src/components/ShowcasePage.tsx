@@ -139,8 +139,8 @@ export default function ShowcasePage({ slug, kind }: { slug: string; kind: "prod
         </section>
       )}
 
-      {/* Interactive demo for products without a video */}
-      {!product.video && (
+      {/* Interactive demo for products without a video (brand boards always show) */}
+      {(!product.video || product.demo === "brandkit") && (
         <section className="container-x pb-24">
           <div className="eyebrow mb-8">{product.demo === "brandkit" ? "Brand system" : "Live demo"}</div>
           <ProductPreview product={product} />
