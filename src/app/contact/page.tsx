@@ -25,8 +25,6 @@ const buildOptions = [
   "Something New",
 ];
 
-const budgets = ["< $25k", "$25k – $75k", "$75k – $150k", "$150k+"];
-
 export default function ContactPage() {
   const [type, setType] = useState<string | null>(null);
   const [idea, setIdea] = useState("");
@@ -35,7 +33,6 @@ export default function ContactPage() {
     company: "",
     email: "",
     contact: "",
-    budget: "",
   });
   const [submitted, setSubmitted] = useState(false);
   const [sending, setSending] = useState(false);
@@ -154,25 +151,6 @@ export default function ContactPage() {
                   value={form.contact}
                   onChange={(v) => setForm({ ...form, contact: v })}
                 />
-                <div className="sm:col-span-2">
-                  <label className="eyebrow">Budget</label>
-                  <div className="mt-5 flex flex-wrap gap-2">
-                    {budgets.map((b) => (
-                      <button
-                        key={b}
-                        onClick={() => setForm({ ...form, budget: b })}
-                        data-cursor="arrow"
-                        className={`rounded-full border px-4 py-2 text-xs transition-colors ${
-                          form.budget === b
-                            ? "border-accent bg-accent/10 text-white"
-                            : "border-white/12 text-chalk/55 hover:border-white/30"
-                        }`}
-                      >
-                        {b}
-                      </button>
-                    ))}
-                  </div>
-                </div>
               </div>
 
               <div>

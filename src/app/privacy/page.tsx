@@ -34,7 +34,7 @@ export default function PrivacyPage() {
               "the country, derived by our hosting provider from your IP address; the IP address itself is not stored",
               "a random visitor identifier stored in your browser, and a random session identifier for the current tab",
             ],
-            "Project requests. When you submit the contact form we store the details you type: your name, email, company (optional), the type of project, an optional budget range and your description. We also record the country derived from your IP and the time of submission.",
+            "Project requests. When you submit the contact form we store the details you type: your name, email, company (optional), your Telegram or WhatsApp contact, the type of project and your description. We also record the country derived from your IP and the time of submission.",
             "We do not collect payment data, precise location, or anything from your device beyond what is listed above.",
           ],
         },

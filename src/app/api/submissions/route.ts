@@ -10,7 +10,6 @@ const ALLOWED_TYPES = new Set([
   "Web3 / Blockchain", "Game / Web3 Game", "Casino", "AI", "Automation / Integration", "Branding", "Social Media Marketing",
   "Custom Software", "Something New",
 ]);
-const ALLOWED_BUDGETS = new Set(["< $25k", "$25k – $75k", "$75k – $150k", "$150k+"]);
 
 /**
  * Public endpoint: project applications from the contact form.
@@ -45,7 +44,6 @@ export async function POST(req: NextRequest) {
   const company = clean(b.company, 120);
   const idea = cleanMultiline(b.idea, 4000);
   const type = clean(b.type, 60);
-  const budget = clean(b.budget, 60);
   const contact = clean(b.contact, 80);
 
   if (name.length < 2) return NextResponse.json({ ok: false, error: "Please enter your name." }, { status: 400 });
@@ -54,7 +52,6 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ ok: false, error: "Please leave a Telegram username or WhatsApp number." }, { status: 400 });
   }
   if (type && !ALLOWED_TYPES.has(type)) return NextResponse.json({ ok: false, error: "Invalid project type." }, { status: 400 });
-  if (budget && !ALLOWED_BUDGETS.has(budget)) return NextResponse.json({ ok: false, error: "Invalid budget." }, { status: 400 });
 
   const s = await store();
   const id = await s.addSubmission({
@@ -63,7 +60,7 @@ export async function POST(req: NextRequest) {
     company: company || null,
     idea: idea || null,
     type: type || null,
-    budget: budget || null,
+    budget: null,
     contact,
     source: "contact",
     country: req.headers.get("x-vercel-ip-country") || req.headers.get("cf-ipcountry") || null,

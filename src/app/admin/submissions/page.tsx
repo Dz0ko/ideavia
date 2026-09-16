@@ -103,7 +103,6 @@ function SubmissionsInner() {
                   <th className="py-2 pr-4">Received</th>
                   <th className="py-2 pr-4">Name</th>
                   <th className="py-2 pr-4">Building</th>
-                  <th className="py-2 pr-4">Budget</th>
                   <th className="py-2 pr-4">Email</th>
                   <th className="py-2 pr-4">Telegram / WhatsApp</th>
                   <th className="py-2">Status</th>
@@ -124,7 +123,6 @@ function SubmissionsInner() {
                       {s.company && <span className="ml-1.5 text-chalk/40">· {s.company}</span>}
                     </td>
                     <td className="py-2.5 pr-4">{s.type ?? "—"}</td>
-                    <td className="py-2.5 pr-4 text-chalk/60">{s.budget ?? "—"}</td>
                     <td className="py-2.5 pr-4 text-chalk/60">{s.email}</td>
                     <td className="py-2.5 pr-4 text-chalk/60">{s.contact ?? "—"}</td>
                     <td className="py-2.5">
@@ -172,7 +170,6 @@ function SubmissionsInner() {
                   })()}
                 />
                 <Row k="Building" v={s.type ?? "—"} />
-                <Row k="Budget" v={s.budget ?? "—"} />
                 <Row k="Country" v={s.country ?? "—"} />
                 <Row k="Received" v={new Date(s.ts).toLocaleString()} />
                 <div className="pt-2">

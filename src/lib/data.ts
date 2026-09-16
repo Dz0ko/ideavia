@@ -457,7 +457,7 @@ export const products: Product[] = [
   {
     slug: "whirlwind",
     kind: "project",
-    group: "Gaming",
+    group: "Games",
     logo: "/logos/whirlwind.svg",
     name: "WHIRLWIND",
     category: "GAME / FANTASY STRATEGY · IN DEVELOPMENT",
@@ -838,7 +838,7 @@ export const projectItems = products.filter((p) => p.kind === "project");
 
 /** Listing-page groups in display order */
 export const productGroups = ["Automation", "Branding"];
-export const projectGroups = ["Web3", "Gaming", "SaaS", "Websites"];
+export const projectGroups = ["Web3", "Games", "SaaS", "Websites"];
 
 /** Route for a product or project detail page */
 export const hrefFor = (p: Product) =>
