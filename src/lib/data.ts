@@ -1,6 +1,6 @@
 /** Data for the interactive brand-kit board (BrandKitDemo). */
 export type BrandKit = {
-  mark: "plate" | "squircle" | "pupil";
+  mark: "plate" | "squircle" | "pupil" | "sigil";
   letter?: string;
   wordmark: string;
   tagline: string;
@@ -452,6 +452,91 @@ export const products: Product[] = [
       { q: "What formats ship with the kit?", a: "SVG vectors for the mark in every variant, 2x PNG rasters for the plates, avatar and lockups, plus the three open-licence typefaces." },
     ],
   },
+  {
+    slug: "whirlwind-brand-kit",
+    kind: "product",
+    group: "Branding",
+    logo: "/logos/whirlwind.svg",
+    name: "WHIRLWIND",
+    category: "BRAND KIT / FANTASY STRATEGY GAME",
+    headline: "THE STORM REMEMBERS.",
+    tagline: "Brand guidelines, logo system and press kit for WHIRLWIND: The Last Egg, built by IDAEVIA.",
+    description:
+      "WHIRLWIND: The Last Egg is a single-player fantasy strategy game: tower defense, territory expansion and tactical squad control in one persistent campaign. The brand is a vigil at night: near-black plum, candle gold and one living emerald light at the center. We built the whole system: the Cinzel wordmark and diamond sigil, colour, typography, interface elements, imagery direction, voice and tone, a press kit and store applications.",
+    features: [
+      "Brand essence",
+      "Wordmark, sigil & lockups",
+      "Colour: plum, gold, emerald",
+      "Typography: Cinzel & Cormorant",
+      "Interface elements",
+      "Imagery direction",
+      "Voice & tone",
+      "Press kit & fact sheet",
+      "Store capsule, social, icon",
+    ],
+    accent: "#c9a961",
+    cta: "Explore the brand kit",
+    demo: "brandkit",
+    preferDemo: true,
+    brandKit: {
+      mark: "sigil",
+      wordmark: "WHIRLWIND",
+      tagline: "The last egg",
+      accent: "#c9a961",
+      ground: "#15121a",
+      paper: "#efe6d2",
+      grid: "#1a1620",
+      version: "V1.0 · 2026",
+      docLabel: "Brand kit",
+      typeLabel: "Cinzel 500 · wide tracking · Cormorant for body",
+      headline: ["THE FIRST", "VIGIL"],
+      colors: [
+        { name: "Candle Gold", hex: "#c9a961", dark: true },
+        { name: "Vigil Black", hex: "#15121a" },
+        { name: "Storm Plum", hex: "#1a1620" },
+        { name: "Ash", hex: "#3a3240" },
+        { name: "Fog", hex: "#a89f92", dark: true },
+        { name: "Ivory", hex: "#efe6d2", dark: true },
+        { name: "Egg Emerald", hex: "#1fb28a" },
+        { name: "Ember", hex: "#d9704f" },
+        { name: "Frost", hex: "#7d939a" },
+      ],
+      chips: [{ label: "Continue journey ›" }, { label: "Current stage", solid: true }, { label: "Locked" }],
+    },
+    cover: "/products/whirlwind-brand-kit/pages/page-01.png",
+    coverAspect: "landscape",
+    coverFrame: "none",
+    file: { href: "/products/whirlwind-brand-kit/whirlwind-brand-guidelines.pdf", label: "View brand kit (PDF)" },
+    gallery: [
+      { src: "/products/whirlwind-brand-kit/pages/page-03.png", alt: "WHIRLWIND brand essence: make the player care about what they built" },
+      { src: "/products/whirlwind-brand-kit/pages/page-05.png", alt: "WHIRLWIND logo system: stacked and horizontal lockups, sigil sizes" },
+      { src: "/products/whirlwind-brand-kit/pages/page-06.png", alt: "WHIRLWIND lockups on ivory, on gold, on key art and the sigil" },
+      { src: "/products/whirlwind-brand-kit/pages/page-08.png", alt: "WHIRLWIND colour: night plum, candle gold, one emerald light" },
+      { src: "/products/whirlwind-brand-kit/pages/page-10.png", alt: "WHIRLWIND signal colours: egg emerald, ember, frost, and the proportion rule" },
+      { src: "/products/whirlwind-brand-kit/pages/page-13.png", alt: "WHIRLWIND typography: carved capitals, quiet body" },
+      { src: "/products/whirlwind-brand-kit/pages/page-15.png", alt: "WHIRLWIND interface elements: thin lines, no radius, no shadows" },
+      { src: "/products/whirlwind-brand-kit/pages/page-16.png", alt: "WHIRLWIND imagery: the light is always the egg" },
+      { src: "/products/whirlwind-brand-kit/pages/page-18.png", alt: "WHIRLWIND voice and tone: an oath, not a slogan" },
+      { src: "/products/whirlwind-brand-kit/pages/page-19.png", alt: "WHIRLWIND press kit: fact sheet and project snapshot" },
+    ],
+    facts: [
+      { k: "Client", v: "WHIRLWIND: The Last Egg" },
+      { k: "Sector", v: "Gaming · fantasy strategy / tower defense" },
+      { k: "Deliverables", v: "22-page brand kit: logo system, colour, type, UI, imagery, voice, press kit" },
+      { k: "Year", v: "2026" },
+    ],
+    highlights: [
+      { title: "A vigil, not a spectacle", text: "The brand is quiet, ceremonial and patient: 80% dark ground, 15% ivory type, 5% gold. Emerald and ember are signals reserved for the egg, the evolution line and warnings." },
+      { title: "One typographic logo", text: "Cinzel Medium with wide tracking and the diamond sigil as the only ornament. The sigil is the egg on its plinth seen from above: four gates, one center." },
+      { title: "Interface with rules", text: "Thin one-pixel ash borders, square corners, no shadows. Gold marks the current choice; everything else waits in ivory or fog." },
+      { title: "Ready for the store", text: "Fact sheet, core loop, key features, store capsule, social tiles and icons, so the game can be pitched and listed on day one." },
+    ],
+    steps: ["Brand essence and positioning", "Wordmark, sigil and colour", "Typography, interface and imagery", "Voice, press kit and applications"],
+    faq: [
+      { q: "Can you brand a game before it ships?", a: "Yes. WHIRLWIND is a playable prototype; the brand, press kit and store assets were built ahead of launch so the campaign can grow into an existing identity." },
+      { q: "Does the kit cover the in-game UI?", a: "Yes. Buttons, stage cards, glyphs, dividers and the type scale for HUD, menus and data are all specified in the interface section." },
+    ],
+  },
 
   /* ------------------------------- PROJECTS ------------------------------- */
   {
@@ -897,7 +982,7 @@ export const whyIdaevia = [
 ];
 
 export const numbers = [
-  { value: 6, suffix: "", label: "Products Live" },
+  { value: 7, suffix: "", label: "Products Live" },
   { value: 20, suffix: "+", label: "Projects" },
   { value: 8, suffix: "", label: "Industries" },
   { value: 30, suffix: "+", label: "Technologies" },

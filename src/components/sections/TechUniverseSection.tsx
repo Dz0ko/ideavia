@@ -1,13 +1,9 @@
 "use client";
 
-import dynamic from "next/dynamic";
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import SectionHeading from "@/components/ui/SectionHeading";
-
-const TechUniverse = dynamic(() => import("@/components/three/TechUniverse"), {
-  ssr: false,
-});
+import TechOrbit from "@/components/three/TechOrbit";
 
 const detail: Record<string, string> = {
   WEB3: "Token launchpads, DEX, wallets, NFT platforms, DeFi and smart contracts.",
@@ -35,17 +31,17 @@ export default function TechUniverseSection() {
         <SectionHeading
           eyebrow="Ecosystem"
           title="THE IDAEVIA UNIVERSE"
-          intro="A living map of everything we build, from blockchain to booking platforms. Hover, drag and rotate, then pick a domain."
+          intro="A living map of everything we build, from blockchain to booking platforms. Every domain orbits one core. Pick one to see what it covers."
           align="center"
         />
       </div>
 
-      <div className="relative mt-6 grid items-center gap-6 lg:grid-cols-[1.5fr_1fr]">
-        <div className="h-[360px] w-full sm:h-[480px] md:h-[600px]">
-          <TechUniverse active={active} onSelect={setActive} className="h-full w-full" />
+      <div className="container-x relative mt-10 grid items-center gap-10 lg:grid-cols-[1.4fr_1fr]">
+        <div className="w-full px-2 sm:px-6">
+          <TechOrbit active={active} onSelect={setActive} />
         </div>
 
-        <div className="container-x lg:pr-16">
+        <div>
           <AnimatePresence mode="wait">
             <motion.div
               key={active}

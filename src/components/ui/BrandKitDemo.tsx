@@ -10,6 +10,16 @@ const ORDER: Variant[] = ["dark", "accent", "mono"];
 function Mark({ kit, variant, size = 56 }: { kit: BrandKit; variant: Variant; size?: number }) {
   const bg = variant === "accent" ? kit.accent : variant === "mono" ? kit.paper : kit.ground;
   const fg = variant === "dark" ? kit.accent : kit.ground;
+  if (kit.mark === "sigil") {
+    return (
+      <div
+        className="flex items-center justify-center rounded-full border"
+        style={{ width: size, height: size, background: bg, borderColor: fg }}
+      >
+        <span className="block rotate-45 border-2" style={{ width: size * 0.3, height: size * 0.3, borderColor: fg }} />
+      </div>
+    );
+  }
   if (kit.mark === "pupil") {
     return (
       <div
