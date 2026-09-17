@@ -51,13 +51,13 @@ export default function PrivacyPage() {
         {
           title: "Cookies and local storage",
           body: [
-            "The Site does not set advertising or third-party cookies. It uses browser storage for your consent choice, the anonymous visitor identifier and the session identifier, and one secure cookie for the private administration area used by IDAEVIA staff only. Details are in the Cookie Policy.",
+            "With your consent the Site loads one advertising measurement pixel from Whop (t.whop.tw) to measure whether our ads brought you here; see the Cookie Policy. Otherwise it uses browser storage for your consent choice, the anonymous visitor identifier and the session identifier, and one secure cookie for the private administration area used by IDAEVIA staff only. Details are in the Cookie Policy.",
           ],
         },
         {
           title: "Who has access",
           body: [
-            "Only IDAEVIA. Analytics and project requests are stored in our own database and viewed through a password-protected administration panel. We do not sell, rent or share your data with advertisers. Our hosting provider processes data on our behalf under a data processing agreement, and derives the country from your IP address as part of delivering the Site.",
+            "Only IDAEVIA. Analytics and project requests are stored in our own database and viewed through a password-protected administration panel. We do not sell or rent your data. With your consent, Whop receives page-view events from its measurement pixel so we can attribute visits to our ads. Our hosting provider processes data on our behalf under a data processing agreement, and derives the country from your IP address as part of delivering the Site.",
           ],
         },
         {

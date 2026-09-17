@@ -22,16 +22,19 @@ function securityHeaders(res: NextResponse, csp: string) {
 
 function buildCsp(n: string) {
   // In development Next.js needs eval for React Refresh; never in production.
-  const scriptSrc = isProd ? `'self' 'nonce-${n}' 'strict-dynamic'` : `'self' 'nonce-${n}' 'unsafe-eval' 'unsafe-inline'`;
+  // t.whop.tw: Whop Ads conversion pixel, injected only after analytics consent.
+  const scriptSrc = isProd
+    ? `'self' 'nonce-${n}' 'strict-dynamic' https://t.whop.tw`
+    : `'self' 'nonce-${n}' 'unsafe-eval' 'unsafe-inline' https://t.whop.tw`;
   return [
     "default-src 'self'",
     `script-src ${scriptSrc}`,
     // Inline style attributes are used by Framer Motion / R3F and our own style={{}}.
     "style-src 'self' 'unsafe-inline'",
-    "img-src 'self' data: blob:",
+    "img-src 'self' data: blob: https://t.whop.tw",
     "font-src 'self' data:",
     "media-src 'self' blob:",
-    "connect-src 'self'",
+    "connect-src 'self' https://t.whop.tw",
     "worker-src 'self' blob:",
     "object-src 'none'",
     "base-uri 'self'",

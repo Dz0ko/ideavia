@@ -47,7 +47,7 @@ export default function CookieConsent() {
               <div className="text-sm font-semibold">Privacy &amp; analytics</div>
               <p className="mt-1.5 text-xs leading-relaxed text-chalk/60">
                 We use privacy-friendly, first-party analytics to understand how many people visit,
-                which pages they read and where they come from. No ad trackers, nothing is sold.
+                which pages they read and where they come from, plus one ad measurement pixel (Whop). Nothing is sold.
                 Read our{" "}
                 <Link href="/cookies" className="text-chalk/90 underline underline-offset-2 hover:text-white">Cookie Policy</Link>
                 {" "}and{" "}

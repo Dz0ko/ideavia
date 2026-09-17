@@ -16,7 +16,7 @@ export default function CookiesPage() {
         current="/cookies"
         eyebrow="Legal"
         title="COOKIE POLICY."
-        intro="We keep this simple: no advertising cookies, no third-party trackers. The Site uses a small amount of browser storage for your consent choice and for privacy-friendly, first-party analytics that only run if you accept them."
+        intro="We keep this simple. The Site uses a small amount of browser storage for your consent choice, privacy-friendly first-party analytics, and one advertising measurement pixel (Whop). Analytics and the pixel only run if you accept them."
         updated={UPDATED}
         sections={[
           {
@@ -40,13 +40,13 @@ export default function CookiesPage() {
           {
             title: "Third parties",
             body: [
-              "None. There is no Google Analytics, Meta Pixel or similar on this Site. Fonts are served from our own domain. Videos and images are hosted by us.",
+              "Whop Ads pixel (t.whop.tw): loaded only after you accept analytics. It records that a page was viewed so we can measure whether our advertising brought you here. Whop may set its own identifiers in your browser and processes this data under its own privacy policy. There is no Google Analytics, Meta Pixel or similar on this Site. Fonts are served from our own domain. Videos and images are hosted by us.",
             ],
           },
           {
             title: "How to change your choice",
             body: [
-              "Use the controls below at any time. \"Essential only\" stops analytics immediately. \"Reset\" also deletes the identifiers from your browser. You can also clear site data in your browser settings.",
+              "Use the controls below at any time. \"Essential only\" stops analytics and the advertising pixel immediately. \"Reset\" also deletes the identifiers from your browser. You can also clear site data in your browser settings.",
             ],
           },
         ]}

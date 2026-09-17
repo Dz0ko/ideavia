@@ -7,6 +7,7 @@ import SmoothScroll from "@/components/providers/SmoothScroll";
 import Nav from "./Nav";
 import Footer from "./Footer";
 import Analytics from "@/components/Analytics";
+import WhopPixel from "@/components/WhopPixel";
 import CookieConsent from "@/components/CookieConsent";
 import { markSiteReady } from "@/lib/ready";
 
@@ -38,6 +39,7 @@ export default function SiteChrome({ children }: { children: ReactNode }) {
     <>
       <CustomCursor />
       <Analytics />
+      <WhopPixel />
       <CookieConsent />
       <SmoothScroll>
         <Nav />
