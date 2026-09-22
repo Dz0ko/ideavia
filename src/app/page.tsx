@@ -4,7 +4,7 @@ import HeroTransform from "@/components/sections/HeroTransform";
 import WhatIsIdaevia from "@/components/sections/WhatIsIdaevia";
 import Journey from "@/components/sections/Journey";
 import Vision from "@/components/sections/Vision";
-import IdaeviaBuild from "@/components/sections/IdaeviaBuild";
+import IdaeviaBuildTeaser from "@/components/sections/IdaeviaBuildTeaser";
 import FinalCta from "@/components/sections/FinalCta";
 
 export default function Home() {
@@ -17,7 +17,7 @@ export default function Home() {
         <WhatIsIdaevia />
         <Journey />
         <Vision />
-        <IdaeviaBuild />
+        <IdaeviaBuildTeaser />
         <FinalCta />
       </main>
     </>

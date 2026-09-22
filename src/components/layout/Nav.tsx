@@ -13,7 +13,7 @@ const links = [
   { label: "Projects", href: "/projects" },
   { label: "Studio", href: "/studio" },
   { label: "Lab", href: "/lab" },
-  { label: "Build", href: "/#idaevia-build" },
+  { label: "Build", href: "/build" },
   { label: "About", href: "/about" },
 ];
 
@@ -44,7 +44,7 @@ export default function Nav() {
 
   useEffect(() => setOpen(false), [pathname]);
 
-  const isActive = (href: string) => href === "/#idaevia-build" ? pathname === "/" : pathname.startsWith(href);
+  const isActive = (href: string) => pathname.startsWith(href);
 
   return (
     <>
@@ -85,7 +85,7 @@ export default function Nav() {
                       active ? "text-white" : "text-chalk/60 hover:text-white"
                     }`}
                   >
-                    {l.href === "/#idaevia-build" ? <BuildMark /> : l.label}
+                    {l.href === "/build" ? <BuildMark /> : l.label}
                     <span
                       className={`absolute inset-x-4 -bottom-px h-px bg-accent transition-transform duration-300 ${
                         active ? "scale-x-100" : "scale-x-0 group-hover:scale-x-100"
@@ -141,7 +141,7 @@ export default function Nav() {
                     isActive(l.href) ? "text-white" : "text-chalk/70"
                   }`}
                 >
-                    {l.href === "/#idaevia-build" ? <BuildMark /> : l.label}
+                  {l.href === "/build" ? <BuildMark /> : l.label}
                 </Link>
               </motion.div>
             ))}
