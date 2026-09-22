@@ -17,6 +17,18 @@ const links = [
   { label: "About", href: "/about" },
 ];
 
+function BuildMark() {
+  return (
+    <span className="inline-flex items-center gap-2" aria-label="IDAEVIA Build">
+      <span className="relative inline-flex h-6 w-6 items-center justify-center rounded-[5px] bg-white text-[12px] font-semibold tracking-[-0.06em] text-ink">
+        Æ
+        <span className="absolute bottom-[2px] right-[2px] h-1 w-1 rounded-full bg-accent" />
+      </span>
+      <span className="text-[11px] font-semibold uppercase tracking-[0.12em] text-white/85">Build</span>
+    </span>
+  );
+}
+
 export default function Nav() {
   const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
@@ -73,7 +85,7 @@ export default function Nav() {
                       active ? "text-white" : "text-chalk/60 hover:text-white"
                     }`}
                   >
-                    {l.label}
+                    {l.href === "/#idaevia-build" ? <BuildMark /> : l.label}
                     <span
                       className={`absolute inset-x-4 -bottom-px h-px bg-accent transition-transform duration-300 ${
                         active ? "scale-x-100" : "scale-x-0 group-hover:scale-x-100"
@@ -129,7 +141,7 @@ export default function Nav() {
                     isActive(l.href) ? "text-white" : "text-chalk/70"
                   }`}
                 >
-                  {l.label}
+                    {l.href === "/#idaevia-build" ? <BuildMark /> : l.label}
                 </Link>
               </motion.div>
             ))}
