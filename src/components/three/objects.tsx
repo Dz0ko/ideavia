@@ -56,7 +56,7 @@ function Edges({
 }
 
 /* ------------------------------------------------------------------ */
-/* WEB3 — token coin with orbiting nodes                               */
+/* WEB3: token coin with orbiting nodes                                 */
 /* ------------------------------------------------------------------ */
 
 export function TokenCoin({ accent }: { accent: string }) {
@@ -117,7 +117,7 @@ export function TokenCoin({ accent }: { accent: string }) {
 }
 
 /* ------------------------------------------------------------------ */
-/* TRADING — live 3D candlestick chart                                 */
+/* TRADING: live 3D candlestick chart                                   */
 /* ------------------------------------------------------------------ */
 
 export function Candles({ accent }: { accent: string }) {
@@ -173,7 +173,7 @@ export function Candles({ accent }: { accent: string }) {
 }
 
 /* ------------------------------------------------------------------ */
-/* SAAS — data stack: 3×3×3 pulsing digital cubes                      */
+/* SAAS: data stack: 3×3×3 pulsing digital cubes                        */
 /* ------------------------------------------------------------------ */
 
 export function DataStack({ accent }: { accent: string }) {
@@ -228,7 +228,7 @@ export function DataStack({ accent }: { accent: string }) {
 }
 
 /* ------------------------------------------------------------------ */
-/* GAMING — tumbling dice + coins                                      */
+/* GAMING: tumbling dice + coins                                        */
 /* ------------------------------------------------------------------ */
 
 const PIPS: Record<number, [number, number][]> = {
@@ -302,7 +302,7 @@ export function DiceCoins({ accent }: { accent: string }) {
 }
 
 /* ------------------------------------------------------------------ */
-/* CASINO — chip stack + cards                                         */
+/* CASINO: chip stack + cards                                           */
 /* ------------------------------------------------------------------ */
 
 export function Chips({ accent }: { accent: string }) {
@@ -360,7 +360,7 @@ export function Chips({ accent }: { accent: string }) {
 }
 
 /* ------------------------------------------------------------------ */
-/* AI — neural network with signals travelling along edges             */
+/* AI: neural network with signals travelling along edges               */
 /* ------------------------------------------------------------------ */
 
 export function NeuralNet({ accent }: { accent: string }) {

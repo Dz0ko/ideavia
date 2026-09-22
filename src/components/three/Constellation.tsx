@@ -50,7 +50,7 @@ function Net() {
   );
 }
 
-/** Ambient technology constellation — use as an absolutely-positioned background. */
+/** Ambient technology constellation, used as an absolutely-positioned background. */
 export default function Constellation({ className = "" }: { className?: string }) {
   return (
     <LazyScene className={className} camera={{ position: [0, 0, 9], fov: 45 }}>

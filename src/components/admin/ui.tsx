@@ -129,7 +129,7 @@ export function refHost(r?: string | null) {
 
 /** Browser + OS from a user-agent string. */
 export function parseUA(ua?: string | null) {
-  if (!ua) return { browser: "—", os: "—" };
+  if (!ua) return { browser: "N/A", os: "N/A" };
   const browser =
     /Edg\//.test(ua) ? "Edge" :
     /OPR\/|Opera/.test(ua) ? "Opera" :
@@ -147,7 +147,7 @@ export function parseUA(ua?: string | null) {
     /Windows/.test(ua) ? "Windows" :
     /Mac OS X|Macintosh/.test(ua) ? "macOS" :
     /CrOS/.test(ua) ? "ChromeOS" :
-    /Linux/.test(ua) ? "Linux" : "—";
+    /Linux/.test(ua) ? "Linux" : "N/A";
   return { browser, os };
 }
 
@@ -194,9 +194,9 @@ export function VisitorFeed({ rows, limit }: { rows: FeedRow[]; limit?: number }
                   {refHost(p.referrer)}
                 </td>
                 <td className="py-2 pr-4 whitespace-nowrap">
-                  <span className="capitalize">{p.device ?? "—"}</span>
+                  <span className="capitalize">{p.device ?? "N/A"}</span>
                   <span className="ml-1.5 text-xs text-chalk/40">
-                    {browser}{os !== "—" ? ` · ${os}` : ""}{p.screen_w ? ` · ${p.screen_w}px` : ""}
+                    {browser}{os !== "N/A" ? ` · ${os}` : ""}{p.screen_w ? ` · ${p.screen_w}px` : ""}
                   </span>
                 </td>
                 <td className="py-2 pr-4 whitespace-nowrap">

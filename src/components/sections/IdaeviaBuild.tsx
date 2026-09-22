@@ -5,7 +5,7 @@ const STEPS = [
   {
     no: "01",
     title: "Describe the idea",
-    text: "Tell IDÆVIA what you want to build in plain language — a landing page, SaaS product, dashboard or something entirely new.",
+    text: "Tell IDÆVIA what you want to build in plain language. Create a landing page, SaaS product, dashboard or something entirely new.",
   },
   {
     no: "02",
@@ -93,7 +93,7 @@ export default function IdaeviaBuild() {
           <div className="mt-10 flex flex-col items-start justify-between gap-5 rounded-2xl border border-white/8 bg-white/[0.025] p-6 md:flex-row md:items-center md:px-8">
             <div>
               <p className="text-lg font-medium">Start with an idea. Leave with something you can share.</p>
-              <p className="mt-1 text-sm text-chalk/45">Websites, apps and digital products — built in one workspace.</p>
+              <p className="mt-1 text-sm text-chalk/45">Websites, apps and digital products. Built in one workspace.</p>
             </div>
             <a
               href="https://idaevia.app/"

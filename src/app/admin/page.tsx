@@ -114,7 +114,7 @@ export default function AdminOverview() {
                     <StatusBadge status={String(s.status)} />
                   </div>
                   <div className="mt-0.5 truncate text-xs text-chalk/40">
-                    {String(s.type ?? "—")} · {String(s.email)} · {fmtDate(Number(s.ts))}
+                    {String(s.type ?? "N/A")} · {String(s.email)} · {fmtDate(Number(s.ts))}
                   </div>
                 </li>
               ))}

@@ -122,9 +122,9 @@ function SubmissionsInner() {
                       {s.name}
                       {s.company && <span className="ml-1.5 text-chalk/40">· {s.company}</span>}
                     </td>
-                    <td className="py-2.5 pr-4">{s.type ?? "—"}</td>
+                    <td className="py-2.5 pr-4">{s.type ?? "N/A"}</td>
                     <td className="py-2.5 pr-4 text-chalk/60">{s.email}</td>
-                    <td className="py-2.5 pr-4 text-chalk/60">{s.contact ?? "—"}</td>
+                    <td className="py-2.5 pr-4 text-chalk/60">{s.contact ?? "N/A"}</td>
                     <td className="py-2.5">
                       <StatusBadge status={s.status} />
                     </td>
@@ -157,20 +157,20 @@ function SubmissionsInner() {
               </div>
               <dl className="space-y-3 text-sm">
                 <Row k="Name" v={s.name} />
-                <Row k="Company" v={s.company ?? "—"} />
+                <Row k="Company" v={s.company ?? "N/A"} />
                 <Row k="Email" v={<a className="text-[#8b97ff] hover:underline" href={`mailto:${s.email}`}>{s.email}</a>} />
                 <Row
                   k="Telegram / WhatsApp"
                   v={(() => {
-                    if (!s.contact) return "—";
+                    if (!s.contact) return "N/A";
                     const c = contactLink(s.contact);
                     return c.href ? (
                       <a className="text-[#8b97ff] hover:underline" href={c.href} target="_blank" rel="noreferrer">{c.label}</a>
                     ) : c.label;
                   })()}
                 />
-                <Row k="Building" v={s.type ?? "—"} />
-                <Row k="Country" v={s.country ?? "—"} />
+                <Row k="Building" v={s.type ?? "N/A"} />
+                <Row k="Country" v={s.country ?? "N/A"} />
                 <Row k="Received" v={new Date(s.ts).toLocaleString()} />
                 <div className="pt-2">
                   <div className="text-[11px] uppercase tracking-wider text-chalk/40">Status</div>

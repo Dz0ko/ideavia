@@ -4,7 +4,7 @@ import { useRef, MouseEvent } from "react";
 
 /**
  * A stylized "product UI" mock with a subtle 3D tilt on hover.
- * Purely decorative — stands in for real screenshots.
+ * Purely decorative, standing in for real screenshots.
  */
 export default function UIPreview({ accent = "#5b6bff" }: { accent?: string }) {
   const ref = useRef<HTMLDivElement>(null);
