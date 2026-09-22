@@ -13,6 +13,7 @@ const links = [
   { label: "Projects", href: "/projects" },
   { label: "Studio", href: "/studio" },
   { label: "Lab", href: "/lab" },
+  { label: "Build", href: "/#idaevia-build" },
   { label: "About", href: "/about" },
 ];
 
@@ -31,7 +32,7 @@ export default function Nav() {
 
   useEffect(() => setOpen(false), [pathname]);
 
-  const isActive = (href: string) => pathname.startsWith(href);
+  const isActive = (href: string) => href === "/#idaevia-build" ? pathname === "/" : pathname.startsWith(href);
 
   return (
     <>

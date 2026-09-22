@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import Intro from "@/components/sections/Intro";
 import About from "@/components/sections/About";
-import IdaeviaBuild from "@/components/sections/IdaeviaBuild";
 import TechUniverseSection from "@/components/sections/TechUniverseSection";
 import WhyIdaevia from "@/components/sections/WhyIdaevia";
 import Numbers from "@/components/sections/Numbers";
@@ -19,7 +18,6 @@ export default function AboutPage() {
     <main className="pt-[72px]">
       <Intro />
       <About />
-      <IdaeviaBuild />
       <PossibleCta eyebrow="Our promise" />
       <TechUniverseSection />
       <WhyIdaevia />
